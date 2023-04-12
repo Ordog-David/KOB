@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 // This script handles purely aesthetic things like particles
@@ -29,7 +30,7 @@ public class PlayerJuice : MonoBehaviour
     void Update()
     {
         // We need to change the character's running animation to suit their current speed
-        float movementSpeed = Mathf.Clamp(Mathf.Abs(playerMovement.GetVelocity().x), 0, playerMovement.GetMaxSpeed());
+        var movementSpeed = Mathf.Clamp(Mathf.Abs(playerMovement.GetVelocity().x), 0, playerMovement.GetMaxSpeed());
         playerAnimator.SetFloat("MovementSpeed", movementSpeed);
 
         if (playerGrounded == false && playerGround.IsOnGround() == true)
@@ -46,9 +47,24 @@ public class PlayerJuice : MonoBehaviour
         }
     }
 
+    private void OnAnimatorMove()
+    {
+        if (playerGrounded == true)
+        {
+            playerAnimator.ApplyBuiltinRootMotion();
+        }
+    }
+
+    internal void PlayFallEffects()
+    {
+        playerAnimator.SetTrigger("Fall");
+    }
+
     private void PlayLandEffects()
     {
         // Play an animation, some particles, and a sound effect when the player lands
+        playerAnimator.ResetTrigger("Fall");
+        playerAnimator.ResetTrigger("Jump");
         playerAnimator.SetTrigger("Land");
         //landParticles.Play();
 
@@ -58,6 +74,11 @@ public class PlayerJuice : MonoBehaviour
         //}
 
         //moveParticles.Play();
+    }
+
+    internal void PlaySwingEffects()
+    {
+        playerAnimator.SetTrigger("Swing");
     }
 
     private void PlayWalkEffects()

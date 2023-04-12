@@ -4,26 +4,40 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Components")]
-    private Rigidbody2D playerBody;
     private PlayerGround playerGround;
+    private PlayerJuice playerJuice;
+    private Rigidbody2D playerBody;
+    private GrapplingPoint rope;
 
     [Header("Movement Stats")]
-    [SerializeField, Range(0f, 20f)][Tooltip("Maximum movement speed")] private float maxSpeed = 2f;
-    [SerializeField, Range(0f, 100f)][Tooltip("How fast to reach max speed when in mid-air")] private float maxAirAcceleration = 80f;
-    [SerializeField, Range(0f, 100f)][Tooltip("How fast to stop in mid-air when no direction is used")] private float maxAirDeceleration = 80f;
-    [SerializeField, Range(0f, 100f)][Tooltip("How fast to stop when changing direction when in mid-air")] private float maxAirTurnSpeed = 80f;
+    [SerializeField, Range(0f, 20f)][Tooltip("Movement speed on ground")] private float walkAnimationSpeed = 1f;
+
+    [Header("Jump Stats")]
+    [SerializeField, Range(2f, 5.5f)] [Tooltip("Maximum jump height")] private float jumpHeight = 2f;
+    [SerializeField, Range(0f, 20f)] [Tooltip("Movement speed in air")] private float jumpSpeed = 5f;
+
+    // A Jump Duration nem jó Lenti kommnetelt módszer alapján kell újra számolni 0.2f - 1.25f, to 1 - 10.
+    [SerializeField, Range(0.2f, 1.25f)] [Tooltip("How long it takes to reach that height before coming back down")] private float timeToJumpApex = 0.3f;
+    [SerializeField] [Tooltip("The fastest speed the character can fall")] private float fallingSpeedLimit = 10f;
+    [SerializeField, Range(0f, 0.3f)] [Tooltip("How long should coyote time last?")] private float coyoteTime = 0.15f;
+    [SerializeField, Range(0f, 0.3f)] [Tooltip("How far from ground should we cache your jump?")] private float jumpBuffer = 0.15f;
 
     [Header("Current State")]
     private bool canMove = true;
-    public float directionX = 0;
-    public Vector2 desiredVelocity = Vector2.zero;
-    public Vector2 velocity = Vector2.zero;
-    public bool pressingKey = false;
+    private float directionX = 0;
+    private Vector2 velocity = Vector2.zero;
+
+    public bool desiredJump = false;
+    private bool currentlyJumping = false;
+    private float jumpBufferCounter = 0f;
+    private float coyoteTimeCounter = 0f;
 
     private void Awake()
     {
         playerBody = GetComponent<Rigidbody2D>();
         playerGround = GetComponent<PlayerGround>();
+        playerJuice = GetComponentInChildren<PlayerJuice>();
+        rope = GetComponentInChildren<GrapplingPoint>();
     }
 
     public void OnMovement(InputAction.CallbackContext context)
@@ -33,6 +47,15 @@ public class PlayerMovement : MonoBehaviour
         if (canMove)
         {
             directionX = context.ReadValue<float>();
+        }
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        // Ugrás gomb lenyomásakor
+        if (canMove && context.started)
+        {
+            desiredJump = true;
         }
     }
 
@@ -48,77 +71,130 @@ public class PlayerMovement : MonoBehaviour
         // És irányszámításhoz
         if (directionX != 0)
         {
-            float scale = transform.localScale.y;
+            var scale = transform.localScale.y;
             transform.localScale = new Vector3(directionX * scale, scale, 1);
-            pressingKey = true;
+        }
+
+        SetPhysics();
+
+        // Jump Buffer
+        if (desiredJump)
+        {
+            jumpBufferCounter += Time.deltaTime;
+
+            if (jumpBufferCounter > jumpBuffer)
+            {
+                // Jump Buffer lejár
+                desiredJump = false;
+                jumpBufferCounter = 0;
+            }
+        }
+
+        // Zuhanás észlelése és coyote time
+        if (currentlyJumping == false && playerGround.IsOnGround() == false)
+        {
+            coyoteTimeCounter += Time.deltaTime;
         }
         else
         {
-            pressingKey = false;
+            coyoteTimeCounter = 0;
         }
+    }
 
-        // sebesség számítás
-        desiredVelocity = new Vector2(directionX, 0f) * maxSpeed;
+    private void SetPhysics()
+    {
+        // Determine the character's gravity scale, using the stats provided. Multiply it by a gravMultiplier, used
+        // later?
+        var newGravityY = -2 * jumpHeight / (timeToJumpApex * timeToJumpApex);
+        playerBody.gravityScale = newGravityY / Physics2D.gravity.y;
     }
 
     private void FixedUpdate()
     {
-        velocity = playerBody.velocity;
-
-        // Mozgásfajta
-        if (playerGround.IsOnGround())
+        if (rope.IsEnabled())
         {
-            RunOnGround();
+            if (desiredJump && CanJump())
+            {
+                velocity = playerBody.velocity;
+                StartJumping();
+                playerBody.velocity = velocity;
+            }
+
+            if (directionX != 0)
+            {
+                playerBody.AddForce(Vector2.right * directionX, ForceMode2D.Impulse);
+            }
         }
         else
         {
-            RunInAir();
-        }
-    }
+            velocity = playerBody.velocity;
 
-    private void RunOnGround()
-    {
-        // Földi sebesesség
-        velocity.x = desiredVelocity.x;
-
-        playerBody.velocity = velocity;
-    }
-
-    private void RunInAir()
-    {
-        // Levegőben mozgás
-
-        float maxSpeedChange;
-        if (pressingKey)
-        {
-            // If the sign (i.e. positive or negative) of our input direction doesn't match our movement, it means
-            // we're turning around and so should use the turn speed stat.
-            if (Mathf.Sign(directionX) != Mathf.Sign(velocity.x))
+            // Probalkozás ugrani
+            if (desiredJump && CanJump())
             {
-                maxSpeedChange = maxAirTurnSpeed * Time.deltaTime;
+                StartJumping();
             }
             else
             {
-                // If they match, it means we're simply running along and so should use the acceleration stat
-                maxSpeedChange = maxAirAcceleration * Time.deltaTime;
+                CalculateGravity();
             }
-        }
-        else
-        {
-            // And if we're not pressing a direction at all, use the deceleration stat
-            maxSpeedChange = maxAirDeceleration * Time.deltaTime;
-        }
 
-        // Gyorsulás
-        velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
+            CaclulateVelocity();
 
-        // Sebesség átadása a RigidBodynak
-        playerBody.velocity = velocity;
+            // Sebesség átadása a RigidBodynak
+            playerBody.velocity = velocity;
+        }
     }
 
-    public bool GetCanMove()
+    private void CaclulateVelocity()
     {
-        return canMove;
+        // Levegőbeli sebesesség
+        velocity.x = directionX * jumpSpeed;
+    }
+
+    private void CalculateGravity()
+    {
+        // Egyhelyben állás
+        if (Mathf.Abs(playerBody.velocity.y) < 0.01f)
+        {
+            if (playerGround.IsOnGround())
+            {
+                currentlyJumping = false;
+            }
+        }
+
+        velocity.y = Mathf.Clamp(velocity.y, -fallingSpeedLimit, 100);
+    }
+
+    private bool CanJump()
+    {
+        return playerGround.IsOnGround() || (coyoteTimeCounter != 0.0f && coyoteTimeCounter < coyoteTime) ||
+            rope.IsEnabled();
+    }
+
+    private void StartJumping()
+    {
+        // Ugrás kezdése
+        desiredJump = false;
+        jumpBufferCounter = 0;
+        coyoteTimeCounter = 0;
+        rope.ReleaseGrapplePoint();
+
+        // Ugrás ereje
+        var jumpSpeedY = Mathf.Sqrt(-2f * Physics2D.gravity.y * playerBody.gravityScale * jumpHeight);
+
+        // Sebesség hozzáadása
+        velocity.y += jumpSpeedY;
+        currentlyJumping = true;
+
+        // Késöbbre effekteknek
+        playerJuice.PlayJumpEffects();
+    }
+
+    // Késöbbre trambulinnak
+    public void BounceUp(float bounceAmount)
+    {
+        playerBody.AddForce(Vector2.up * bounceAmount, ForceMode2D.Impulse);
     }
 
     public void SetCanMove(bool canMove)
@@ -128,11 +204,27 @@ public class PlayerMovement : MonoBehaviour
 
     public float GetMaxSpeed()
     {
-        return maxSpeed;
+        return walkAnimationSpeed;
     }
 
     public Vector2 GetVelocity()
     {
-        return velocity;
+        return new Vector2(directionX == 0? 0f : walkAnimationSpeed, 0f);
     }
+
+    /*
+    timeToApexStat = scale(1, 10, 0.2f, 2.5f, numberFromPlatformerToolkit)
+
+
+      public float scale(float OldMin, float OldMax, float NewMin, float NewMax, float OldValue)
+        {
+
+            float OldRange = (OldMax - OldMin);
+            float NewRange = (NewMax - NewMin);
+            float NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin;
+
+            return (NewValue);
+        }
+
+    */
 }

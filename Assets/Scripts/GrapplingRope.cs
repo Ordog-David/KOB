@@ -24,10 +24,6 @@ public class GrapplingRope : MonoBehaviour
     private bool isGrappling = true;
     private bool straightLine = true;
 
-    public void Start()
-    {
-    }
-
     private void OnEnable()
     {
         moveTime = 0;
@@ -101,8 +97,6 @@ public class GrapplingRope : MonoBehaviour
 
     private bool VectorsEqual(Vector3 value1, Vector3 value2)
     {
-        Debug.Log(value1.x);
-        Debug.Log(value2.x);
         return FloatsEqual(value1.x, value2.x) && FloatsEqual(value1.y, value2.y);
     }
 
@@ -115,10 +109,13 @@ public class GrapplingRope : MonoBehaviour
     {
         for (int i = 0; i < precision; i++)
         {
-            float delta = (float)i / ((float)precision - 1f);
-            Vector2 offset = ropeAnimationCurve.Evaluate(delta) * waveSize * Vector2.Perpendicular(grapplingPoint.GetGrappleDistanceVector()).normalized;
-            Vector2 targetPosition = Vector2.Lerp(grapplingPoint.GetRopeLaunchPosition(), grapplingPoint.GetGrapplePoint(), delta) + offset;
-            Vector2 currentPosition = Vector2.Lerp(grapplingPoint.GetRopeLaunchPosition(), targetPosition, ropeProgressionCurve.Evaluate(moveTime) * ropeProgressionSpeed);
+            var delta = (float)i / ((float)precision - 1f);
+            var offset = ropeAnimationCurve.Evaluate(delta) * waveSize *
+                Vector2.Perpendicular(grapplingPoint.GetGrappleDistanceVector()).normalized;
+            var targetPosition = Vector2.Lerp(grapplingPoint.GetRopeLaunchPosition(), grapplingPoint.GetGrapplePoint(),
+                delta) + offset;
+            var currentPosition = Vector2.Lerp(grapplingPoint.GetRopeLaunchPosition(), targetPosition,
+                ropeProgressionCurve.Evaluate(moveTime) * ropeProgressionSpeed);
 
             lineRenderer.SetPosition(i, currentPosition);
         }

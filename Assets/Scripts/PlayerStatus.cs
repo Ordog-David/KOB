@@ -1,6 +1,5 @@
 using DG.Tweening;
-using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -29,7 +28,6 @@ public class PlayerStatus : MonoBehaviour
 
     [Header("Current State")]
     private float worldRadius;
-    private Vector3 lastCheckpointPosition;
     private int health;
     private bool hurting = false;
 
@@ -39,24 +37,55 @@ public class PlayerStatus : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         playerLight = GetComponentInChildren<Light2D>();
         worldRadius = GetWorldRadius();
-        CheckpointReached(playerBody.position);
+
+        SavegameManager.Instance.Load();
+        CheckpointReached(SavegameManager.Instance.Data.hasPosition ?
+            SavegameManager.Instance.Data.position.ToVector3() :
+            playerBody.position);
+    }
+
+    // When the player touches a checkpoint, it passes its position to this script
+    public void CheckpointReached(Vector3 checkpointPosition)
+    {
         ResetHealth();
+
+        SavegameManager.Instance.Data.hasPosition = true;
+        SavegameManager.Instance.Data.position = checkpointPosition;
+        SavegameManager.Instance.Save();
+
+        Debug.Log("Checkpoint saved");
     }
 
-    public void CheckpointReached(Vector3 flagPosition)
+    public void OnInteract(InputAction.CallbackContext context)
     {
-        // When the player touches a checkpoint, it passes its position to this script
-        lastCheckpointPosition = flagPosition;
+        if (context.performed)
+        {
+            var overlappingCollinders = new List<Collider2D>();
+            if (playerBody.OverlapCollider(new ContactFilter2D().NoFilter(), overlappingCollinders) > 0)
+            {
+                var checkpointCollider = overlappingCollinders.FirstOrDefault(collider => collider.CompareTag("Checkpoint"));
+                if (checkpointCollider != null)
+                {
+                    CheckpointReached(checkpointCollider.transform.position);
+                }
+            }
+        }
     }
 
-    public void OnRespawn(InputAction.CallbackContext _)
+    public void OnRespawn(InputAction.CallbackContext context)
     {
-        Respawn();
+        if (context.performed)
+        {
+            Respawn();
+        }
     }
 
-    public void OnQuit(InputAction.CallbackContext _)
+    public void OnQuit(InputAction.CallbackContext context)
     {
-        Application.Quit();
+        if (context.performed)
+        {
+            Application.Quit();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -109,7 +138,6 @@ public class PlayerStatus : MonoBehaviour
     private void Unhurt()
     {
         hurting = false;
-        Debug.Log("health: "+health);
     }
 
     private void Death()
@@ -133,7 +161,7 @@ public class PlayerStatus : MonoBehaviour
     private void Respawn()
     {
         Time.timeScale = 1f;
-        transform.position = lastCheckpointPosition;
+        transform.position = SavegameManager.Instance.Data.position.ToVector3();
         playerMovement.SetCanMove(true);
         //playerAnimator.SetTrigger("Okay");
         ResetHealth();
@@ -148,9 +176,9 @@ public class PlayerStatus : MonoBehaviour
 
     private float GetWorldRadius()
     {
-        float aspect = (float)Screen.width / Screen.height;
-        float worldHeight = Camera.main.orthographicSize;
-        float worldWidth = worldHeight * aspect;
+        var aspect = (float)Screen.width / Screen.height;
+        var worldHeight = Camera.main.orthographicSize;
+        var worldWidth = worldHeight * aspect;
         return Mathf.Sqrt(Mathf.Pow(worldHeight, 2) + Mathf.Pow(worldWidth, 2));
     }
 }

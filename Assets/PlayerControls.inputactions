@@ -24,6 +24,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "edea12e2-3cfb-4be7-8d3c-0c1f5110c04c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Respawn",
                     "type": "Button",
                     "id": "6f4f5cd9-1713-4c46-b8f1-5a2f2b53b011",
@@ -181,6 +190,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Release Grappling Hook",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bce0a509-e74a-490e-bd28-43580351dd24",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
