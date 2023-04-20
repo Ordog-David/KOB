@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,7 +22,6 @@ public class GrapplingPoint : MonoBehaviour
     {
         playerJuice = GetComponent<PlayerJuice>();
         distanceJoint = GetComponent<DistanceJoint2D>();
-
         ReleaseGrapplePoint();
     }
 
@@ -77,6 +77,11 @@ public class GrapplingPoint : MonoBehaviour
     }
 
     public bool IsEnabled()
+    {
+        return rope.enabled;
+    }
+
+    public bool IsStraight()
     {
         return distanceJoint.enabled;
     }

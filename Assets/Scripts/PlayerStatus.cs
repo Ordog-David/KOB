@@ -30,6 +30,7 @@ public class PlayerStatus : MonoBehaviour
     private float worldRadius;
     private int health;
     private bool hurting = false;
+    private Vector3 startingPosition;
 
     void Start()
     {
@@ -37,27 +38,63 @@ public class PlayerStatus : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         playerLight = GetComponentInChildren<Light2D>();
         worldRadius = GetWorldRadius();
+        startingPosition = transform.position;
 
         SavegameManager.Instance.Load();
-        CheckpointReached(SavegameManager.Instance.Data.hasPosition ?
-            SavegameManager.Instance.Data.position.ToVector3() :
-            playerBody.position);
+
+        Debug.Log(SavegameManager.Instance.Data.checkpointName);
+        var checkpoint = FindCheckpoint(SavegameManager.Instance.Data.checkpointName);
+        if (checkpoint != null)
+        {
+            CheckpointReached(checkpoint.name);
+            //playerBody.position = checkpoint.transform.position;
+        }
+    }
+
+    public GameObject FindCheckpoint(string checkpointName)
+    {
+        var checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+        foreach (var checkpoint in checkpoints)
+        {
+            if (checkpoint.name == checkpointName)
+            {
+                return checkpoint;
+            }
+        }
+        return null;
     }
 
     // When the player touches a checkpoint, it passes its position to this script
-    public void CheckpointReached(Vector3 checkpointPosition)
+    public void CheckpointReached(string checkpointName)
     {
         ResetHealth();
 
-        SavegameManager.Instance.Data.hasPosition = true;
-        SavegameManager.Instance.Data.position = checkpointPosition;
+        SavegameManager.Instance.Data.checkpointName = checkpointName;
         SavegameManager.Instance.Save();
+
+        var checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+        foreach (var checkpoint in checkpoints)
+        {
+            var isActive = checkpoint.name == checkpointName;
+            checkpoint.GetComponent<Animator>().SetBool("IsActive", isActive);
+            var checkpointLight = checkpoint.GetComponentInChildren<Light2D>();
+            if (isActive) 
+            {
+                DOTween.To(() => checkpointLight.pointLightOuterRadius, x => checkpointLight.pointLightOuterRadius = x, 5f, 3f);
+            }
+            else
+            {
+                DOTween.To(() => checkpointLight.pointLightOuterRadius, x => checkpointLight.pointLightOuterRadius = x, 0.1f, 0.1f);
+            }
+            
+        }
 
         Debug.Log("Checkpoint saved");
     }
 
     public void OnInteract(InputAction.CallbackContext context)
     {
+        Debug.Log("Interact");
         if (context.performed)
         {
             var overlappingCollinders = new List<Collider2D>();
@@ -66,7 +103,8 @@ public class PlayerStatus : MonoBehaviour
                 var checkpointCollider = overlappingCollinders.FirstOrDefault(collider => collider.CompareTag("Checkpoint"));
                 if (checkpointCollider != null)
                 {
-                    CheckpointReached(checkpointCollider.transform.position);
+                    Debug.Log(checkpointCollider);
+                    CheckpointReached(checkpointCollider.gameObject.name);
                 }
             }
         }
@@ -91,12 +129,20 @@ public class PlayerStatus : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         // If the player hits layer 8 (things that hurt hime), start the hurt routine
-        if (collider.gameObject.layer == 8)
+        if (collider.gameObject.layer == LayerMask.NameToLayer("Spikes"))
         {
             if (hurting == false)
             {
                 hurting = true;
                 Hurt(1);
+            }
+        }
+        else if (collider.gameObject.layer == LayerMask.NameToLayer("Red Projectile"))
+        {
+            if (hurting == false)
+            {
+                hurting = true;
+                Hurt(2);
             }
         }
     }
@@ -142,7 +188,7 @@ public class PlayerStatus : MonoBehaviour
 
     private void Death()
     {
-        playerMovement.SetCanMove(false);
+        playerMovement.SetFrozen(false);
 
         //playerAnimator.SetTrigger("Dead");
 
@@ -161,8 +207,18 @@ public class PlayerStatus : MonoBehaviour
     private void Respawn()
     {
         Time.timeScale = 1f;
-        transform.position = SavegameManager.Instance.Data.position.ToVector3();
-        playerMovement.SetCanMove(true);
+
+        var checkpoint = FindCheckpoint(SavegameManager.Instance.Data.checkpointName);
+        if (checkpoint != null)
+        {
+            transform.position = checkpoint.transform.position;
+        }
+        else
+        {
+            transform.position = startingPosition;
+        }
+
+        playerMovement.SetFrozen(true);
         //playerAnimator.SetTrigger("Okay");
         ResetHealth();
         hurting = false;
@@ -170,7 +226,7 @@ public class PlayerStatus : MonoBehaviour
 
     private void ResetHealth()
     {
-        health = 5;
+        health = 10;
         DOTween.To(() => playerLight.pointLightOuterRadius, x => playerLight.pointLightOuterRadius = x, health / lightDecrease, animationInterval);
     }
 

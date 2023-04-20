@@ -14,7 +14,7 @@ TagManager:
   - Water
   - UI
   - 
-  - 
+  - Red Projectile
   - Spikes
   - 
   - 
@@ -42,6 +42,9 @@ TagManager:
   m_SortingLayers:
   - name: Background
     uniqueID: 490539463
+    locked: 0
+  - name: Gameplay Objects
+    uniqueID: 1533183283
     locked: 0
   - name: Default
     uniqueID: 0
