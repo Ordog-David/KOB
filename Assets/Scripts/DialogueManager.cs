@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,14 +12,34 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Text characterName;
     [SerializeField] private Text sentence;
     [SerializeField] private Animator animator;
+    [SerializeField] private Dialogue[] randomDialogues;
 
     private Queue<Dialogue> dialogues;
     private Queue<string> sentences;
 
-    void Start()
+    private void Start()
     {
         dialogues = new Queue<Dialogue>();
         sentences = new Queue<string>();
+    }
+
+    public void StartRandomDialogue(string dialogueTrigger)
+    {
+        int randomDialogueId;
+        do
+        {
+            randomDialogueId = UnityEngine.Random.Range(0, randomDialogues.Length);
+        }
+        while (SavegameManager.Instance.Data.randomDialogueIds.Contains(randomDialogueId));
+
+        SavegameManager.Instance.Data.randomDialogueIds =
+            SavegameManager.Instance.Data.randomDialogueIds.Append(randomDialogueId).ToArray();
+        SavegameManager.Instance.Data.visitedDialogueTriggers =
+            SavegameManager.Instance.Data.visitedDialogueTriggers.Append(dialogueTrigger).ToArray();
+
+        SavegameManager.Instance.Save();
+
+        StartDialogues(new Dialogue[] { randomDialogues[randomDialogueId] });
     }
 
     public void StartDialogues(Dialogue[] dialogues)

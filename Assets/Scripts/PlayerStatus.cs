@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 // This script handles the character being killed and respawning
 public class PlayerStatus : MonoBehaviour
@@ -13,12 +14,17 @@ public class PlayerStatus : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private AudioSource playerHurtSFX;
-    [SerializeField] private SpriteRenderer flashRenderer;
+    //[SerializeField] private SpriteRenderer flashRenderer;
     [SerializeField] private Color healthyColor;
     [SerializeField] private Color hurtColor;
+    [SerializeField] private Light2D globalLight;
+    [SerializeField] private Text blessingCounter;
     private Rigidbody2D playerBody;
     private PlayerMovement playerMovement;
     private Light2D playerLight;
+    private RopeLaunchPoint rope;
+    private Color defaultColor;
+
 
     [Header("Settings")]
     [SerializeField] private float respawnTime = 1;
@@ -28,27 +34,32 @@ public class PlayerStatus : MonoBehaviour
 
     [Header("Current State")]
     private float worldRadius;
-    private int health;
-    private bool hurting = false;
+    public int health;
+    public bool hurting = false;
     private Vector3 startingPosition;
+
+    private readonly List<IPlayerRespawnListener> respawnListeners = new();
 
     void Start()
     {
         playerBody = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
         playerLight = GetComponentInChildren<Light2D>();
+        rope = GetComponentInChildren<RopeLaunchPoint>();
         worldRadius = GetWorldRadius();
         startingPosition = transform.position;
+        defaultColor = globalLight.color;
 
-        SavegameManager.Instance.Load();
-
-        Debug.Log(SavegameManager.Instance.Data.checkpointName);
         var checkpoint = FindCheckpoint(SavegameManager.Instance.Data.checkpointName);
         if (checkpoint != null)
         {
             CheckpointReached(checkpoint.name);
-            //playerBody.position = checkpoint.transform.position;
+            transform.position = checkpoint.transform.position;
         }
+
+        respawnListeners.ForEach(listener => listener.OnPlayerRespawn());
+
+        ShowBlessings();
     }
 
     public GameObject FindCheckpoint(string checkpointName)
@@ -70,6 +81,7 @@ public class PlayerStatus : MonoBehaviour
         ResetHealth();
 
         SavegameManager.Instance.Data.checkpointName = checkpointName;
+        SavegameManager.Instance.Data.visitedBlessings = GetVisitedBlessings();
         SavegameManager.Instance.Save();
 
         var checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
@@ -86,7 +98,6 @@ public class PlayerStatus : MonoBehaviour
             {
                 DOTween.To(() => checkpointLight.pointLightOuterRadius, x => checkpointLight.pointLightOuterRadius = x, 0.1f, 0.1f);
             }
-            
         }
 
         Debug.Log("Checkpoint saved");
@@ -94,7 +105,6 @@ public class PlayerStatus : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        Debug.Log("Interact");
         if (context.performed)
         {
             var overlappingCollinders = new List<Collider2D>();
@@ -103,7 +113,6 @@ public class PlayerStatus : MonoBehaviour
                 var checkpointCollider = overlappingCollinders.FirstOrDefault(collider => collider.CompareTag("Checkpoint"));
                 if (checkpointCollider != null)
                 {
-                    Debug.Log(checkpointCollider);
                     CheckpointReached(checkpointCollider.gameObject.name);
                 }
             }
@@ -118,15 +127,22 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    public void OnQuit(InputAction.CallbackContext context)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (context.performed)
-        {
-            Application.Quit();
-        }
+        CheckHurt(collider);
     }
 
-    private void OnTriggerEnter2D(Collider2D collider)
+    private void OnTriggerStay2D(Collider2D collider)
+    {
+        CheckHurt(collider);
+    }
+
+    public void AddRespawnListener(IPlayerRespawnListener listener)
+    {
+        respawnListeners.Add(listener);
+    }
+
+    private void CheckHurt(Collider2D collider)
     {
         // If the player hits layer 8 (things that hurt hime), start the hurt routine
         if (collider.gameObject.layer == LayerMask.NameToLayer("Spikes"))
@@ -144,6 +160,10 @@ public class PlayerStatus : MonoBehaviour
                 hurting = true;
                 Hurt(2);
             }
+        }
+        else if (collider.gameObject.layer == LayerMask.NameToLayer("Health Reset"))
+        {
+            ResetHealth();
         }
     }
 
@@ -188,7 +208,7 @@ public class PlayerStatus : MonoBehaviour
 
     private void Death()
     {
-        playerMovement.SetFrozen(false);
+        playerMovement.SetFrozen(true);
 
         //playerAnimator.SetTrigger("Dead");
 
@@ -208,6 +228,8 @@ public class PlayerStatus : MonoBehaviour
     {
         Time.timeScale = 1f;
 
+        rope.ReleaseGrapplePoint();
+
         var checkpoint = FindCheckpoint(SavegameManager.Instance.Data.checkpointName);
         if (checkpoint != null)
         {
@@ -218,10 +240,15 @@ public class PlayerStatus : MonoBehaviour
             transform.position = startingPosition;
         }
 
-        playerMovement.SetFrozen(true);
+        playerMovement.SetFrozen(false);
         //playerAnimator.SetTrigger("Okay");
         ResetHealth();
         hurting = false;
+
+        respawnListeners.ForEach(listener => listener.OnPlayerRespawn());
+        globalLight.color = defaultColor;
+
+        ShowBlessings();
     }
 
     private void ResetHealth()
@@ -230,11 +257,29 @@ public class PlayerStatus : MonoBehaviour
         DOTween.To(() => playerLight.pointLightOuterRadius, x => playerLight.pointLightOuterRadius = x, health / lightDecrease, animationInterval);
     }
 
+    private string[] GetVisitedBlessings()
+    {
+        var visitedBlessings = new List<string>();
+        foreach (var blessing in FindObjectsOfType<Blessing>(true))
+        {
+            if (blessing.gameObject.activeSelf == false)
+            {
+                visitedBlessings.Add(blessing.name);
+            }
+        }
+        return visitedBlessings.ToArray();
+    }
+
     private float GetWorldRadius()
     {
         var aspect = (float)Screen.width / Screen.height;
         var worldHeight = Camera.main.orthographicSize;
         var worldWidth = worldHeight * aspect;
         return Mathf.Sqrt(Mathf.Pow(worldHeight, 2) + Mathf.Pow(worldWidth, 2));
+    }
+
+    public void ShowBlessings()
+    {
+        blessingCounter.text = $"Áldások: {GetVisitedBlessings().Length}";
     }
 }

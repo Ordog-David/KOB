@@ -222,37 +222,15 @@
             ],
             "bindings": [
                 {
-                    "name": "Shift-Q",
-                    "id": "0158e191-08f0-41f1-9b0a-454dfd55c287",
-                    "path": "OneModifier",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Quit",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "a25a9304-4505-40c8-801f-fdccac1cbf15",
-                    "path": "<Keyboard>/shift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Quit",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "binding",
-                    "id": "96823120-fe97-4f75-af3b-de4a66c4fc85",
+                    "name": "",
+                    "id": "888621a6-1b7d-4a60-afaa-c4269bf05d49",
                     "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Quit",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 }
             ]
         }

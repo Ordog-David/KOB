@@ -7,20 +7,20 @@ public class DialogueTrigger : MonoBehaviour
 
     private bool triggered = false;
 
+    private void OnTriggerEnter2D(Collider2D _)
+    {
+        if (triggerOnCollision)
+        {
+            TriggerDialogue();
+        }
+    }
+
     public void TriggerDialogue()
     {
         if (triggered == false)
         {
             triggered = true;
             FindObjectOfType<DialogueManager>().StartDialogues(dialogues);
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (triggerOnCollision)
-        {
-            TriggerDialogue();
         }
     }
 }

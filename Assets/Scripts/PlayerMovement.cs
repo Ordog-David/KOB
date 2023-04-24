@@ -16,13 +16,13 @@ public class PlayerMovement : MonoBehaviour
     private PlayerGround playerGround;
     private PlayerJuice playerJuice;
     private Rigidbody2D playerBody;
-    private GrapplingPoint rope;
+    private RopeLaunchPoint rope;
 
     [Header("Walk Stats")]
     [SerializeField, Range(0f, 20f)][Tooltip("Movement speed on ground")] private float walkSpeed = 1f;
 
     [Header("Jump Stats")]
-    [SerializeField, Range(0f, 20f)] [Tooltip("Movement speed in air")] private float jumpSpeed = 5f;
+    [SerializeField, Range(0f, 20f)] [Tooltip("Movement speed in air after jumping from ground")] private float jumpSpeedAfterWalking = 5f;
     [SerializeField, Range(2f, 5.5f)] [Tooltip("Maximum jump height")] private float jumpHeight = 2f;
     [SerializeField, Range(0.2f, 1.25f)] [Tooltip("How long it takes to reach that height before coming back down")] private float timeToJumpApex = 0.3f;
     [SerializeField, Range(0f, 0.3f)] [Tooltip("How long should coyote time last?")] private float coyoteTime = 0.15f;
@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
     private bool desiredJump = false;
     
     public Vector2 velocity = Vector2.zero;
+    public float jumpSpeed;
 
     private float jumpBufferCounter = 0f;
     private float coyoteTimeCounter = 0f;
@@ -50,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         playerBody = GetComponent<Rigidbody2D>();
         playerGround = GetComponent<PlayerGround>();
         playerJuice = GetComponentInChildren<PlayerJuice>();
-        rope = GetComponentInChildren<GrapplingPoint>();
+        rope = GetComponentInChildren<RopeLaunchPoint>();
 
         state = playerGround.IsOnGround() ? PlayerMovementState.Walking : PlayerMovementState.Falling;
     }
@@ -62,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
         if (state != PlayerMovementState.Frozen)
         {
             directionX = context.ReadValue<float>();
+            jumpSpeed = jumpSpeedAfterWalking;
         }
     }
 
@@ -126,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
         switch (state)
         {
             case PlayerMovementState.Frozen:
-                // Nothing to be done
+                playerBody.velocity = Vector2.zero;
                 break;
 
             case PlayerMovementState.Walking:
@@ -151,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (desiredJump && CanJump())
         {
-            StartJumping();
+            StartJumping(jumpSpeedAfterWalking);
         }
         else if (rope.IsStraight() && playerGround.IsOnGround() == false)
         {
@@ -198,7 +200,7 @@ public class PlayerMovement : MonoBehaviour
             if (desiredJump)
             {
                 rope.ReleaseGrapplePoint();
-                StartJumping();
+                StartJumping(Mathf.Abs(playerBody.velocity.x));
             }
             else if (rope.IsEnabled() == false)
             {
@@ -240,7 +242,7 @@ public class PlayerMovement : MonoBehaviour
         playerJuice.PlayLandEffects();
     }
 
-    private void StartJumping()
+    private void StartJumping(float speed)
     {
         state = PlayerMovementState.Jumping;
 
@@ -250,11 +252,11 @@ public class PlayerMovement : MonoBehaviour
         coyoteTimeCounter = 0;
         rope.ReleaseGrapplePoint();
 
-        // Ugrás ereje
-        var jumpSpeedY = Mathf.Sqrt(-2f * Physics2D.gravity.y * playerBody.gravityScale * jumpHeight);
+        jumpSpeed = speed;
 
-        // Sebesség hozzáadása
-        velocity.y += jumpSpeedY;
+        // Sebesség meghatározása
+        velocity.x = directionX * jumpSpeed;
+        velocity.y += Mathf.Sqrt(-2f * Physics2D.gravity.y * playerBody.gravityScale * jumpHeight);
         playerBody.velocity = velocity;
 
         // Effektek
@@ -305,8 +307,6 @@ public class PlayerMovement : MonoBehaviour
         if (frozen)
         {
             state = PlayerMovementState.Frozen;
-            Debug.Log("PlayerMovement.SetFrozen-nél unfreezelem");
-            state = PlayerMovementState.Walking;
         }
         else
         {
@@ -322,6 +322,5 @@ public class PlayerMovement : MonoBehaviour
     public float GetWalkSpeed()
     {
         return directionX == 0f ? 0f : walkSpeed;
-        //return walkSpeed; // FOR DEBUGGING
     }
 }

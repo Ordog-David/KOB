@@ -232,7 +232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   projectileTemplate: {fileID: 2483703902200006269, guid: 70b9e389ed8e1e84e83b86a45166a329, type: 3}
-  activationDistance: 20
+  activationDistance: 40
   activationSeconds: 5
   projectileSpeed: 5
   projectileOffset: {x: 0, y: -0.5, z: 0}

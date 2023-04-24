@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2483703901678508263}
   - component: {fileID: 2483703901678508262}
   m_Layer: 7
-  m_Name: StraightProjectileLight
+  m_Name: Red Hive Projectile Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 2483703902200006147}
   - component: {fileID: 2483703902200006268}
   - component: {fileID: 2483703902200006145}
-  - component: {fileID: 2483703902200006144}
+  - component: {fileID: 4503492735884816116}
   m_Layer: 7
   m_Name: Red Hive Projectile
   m_TagString: Untagged
@@ -235,7 +235,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.5, y: 0.5}
   m_Direction: 0
---- !u!114 &2483703902200006144
+--- !u!114 &4503492735884816116
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2483703902200006269}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dce67a11cc8b5114ba18c5430780f3df, type: 3}
+  m_Script: {fileID: 11500000, guid: 8232cc0427a915c4c9dffbd99a340682, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5

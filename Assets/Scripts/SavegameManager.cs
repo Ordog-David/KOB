@@ -4,21 +4,35 @@ using UnityEngine;
 
 public class SavegameManager : MonoBehaviour
 {
-    public static SavegameManager Instance { get; private set; }
+    private static SavegameManager instance;
+    public static SavegameManager Instance {
+        get { return instance; }
+    }
 
     public SavegameData Data = new();
 
     private void Awake()
     {
         // If there is an instance, and it's not me, delete myself.
-        if (Instance != null && Instance != this)
+        if (instance != null && instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
+            Debug.Log("Savegame manager is destroyed");
         }
         else
         {
-            Instance = this;
+            instance = this;
+            instance.Load();
+            DontDestroyOnLoad(gameObject);
+            Debug.Log("Savegame manager is loaded");
         }
+    }
+
+    public void Reset()
+    {
+        Data = new();
+        Save();
+        Debug.Log("Savegame manager is resetted");
     }
 
     public void Save()
@@ -36,7 +50,7 @@ public class SavegameManager : MonoBehaviour
         }
     }
 
-    public void Load()
+    private void Load()
     {
         var path = GetSavegamePath();
 
