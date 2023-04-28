@@ -186,7 +186,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -551829533, guid: ebf9ca77a8164944bb4429be17c73ae2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -235,4 +235,5 @@ MonoBehaviour:
   activationDistance: 40
   activationSeconds: 5
   projectileSpeed: 5
-  projectileOffset: {x: 0, y: -0.5, z: 0}
+  projectileOffset: {x: 0, y: -0.45, z: 0}
+  timer: 0

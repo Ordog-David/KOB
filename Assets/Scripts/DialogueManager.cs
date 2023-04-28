@@ -13,6 +13,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Text sentence;
     [SerializeField] private Animator animator;
     [SerializeField] private Dialogue[] randomDialogues;
+    [SerializeField] private PlayerMovement player;
 
     private Queue<Dialogue> dialogues;
     private Queue<string> sentences;
@@ -51,6 +52,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         animator.SetBool("IsOpen", true);
+        player.SetFrozen(true);
 
         DisplayNextDialogue();
     }
@@ -102,5 +104,6 @@ public class DialogueManager : MonoBehaviour
     private void EndDialogue()
     {
         animator.SetBool("IsOpen", false);
+        player.SetFrozen(false);
     }
 }

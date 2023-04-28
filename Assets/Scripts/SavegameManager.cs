@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class SavegameManager : MonoBehaviour
     }
 
     public SavegameData Data = new();
+    private List<ISavegameSavedListener> listeners = new();
 
     private void Awake()
     {
@@ -28,6 +30,11 @@ public class SavegameManager : MonoBehaviour
         }
     }
 
+    public void AddSavegameSavedListener(ISavegameSavedListener listener)
+    {
+        listeners.Add(listener);
+    }
+
     public void Reset()
     {
         Data = new();
@@ -43,6 +50,7 @@ public class SavegameManager : MonoBehaviour
         {
             var json = JsonUtility.ToJson(Data);
             File.WriteAllText(path, json);
+            listeners.ForEach(listener => listener.OnSavegameSaved());
         }
         catch (Exception exception)
         {

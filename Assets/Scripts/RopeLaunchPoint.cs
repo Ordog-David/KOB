@@ -10,6 +10,7 @@ public class RopeLaunchPoint : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     private PlayerJuice playerJuice;
     private DistanceJoint2D distanceJoint;
+    [SerializeField] private PlayerMovement playerMovement;
 
     [Header("Settings")]
     [SerializeField] private string grappableTag = "Grappable";
@@ -28,7 +29,7 @@ public class RopeLaunchPoint : MonoBehaviour
 
     public void OnLaunchGrapplingRope(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && playerMovement.GetState() != PlayerMovement.PlayerMovementState.Frozen)
         {
             ReleaseGrapplePoint();
             SetGrapplePoint();

@@ -128,7 +128,6 @@ public class PlayerMovement : MonoBehaviour
         switch (state)
         {
             case PlayerMovementState.Frozen:
-                playerBody.velocity = Vector2.zero;
                 break;
 
             case PlayerMovementState.Walking:
@@ -161,7 +160,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (playerGround.IsOnGround() == false && InCoyoteTime() == false)
         {
-            StartFalling();
+            StartFalling(jumpSpeedAfterWalking);
         }
     }
 
@@ -179,7 +178,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (velocity.y < -minFallingSpeed)
             {
-                StartFalling();
+                StartFalling(Mathf.Abs(playerBody.velocity.x));
             }
             else
             {
@@ -204,7 +203,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (rope.IsEnabled() == false)
             {
-                StartFalling();
+                StartFalling(Mathf.Abs(playerBody.velocity.x));
             }
             else if (directionX != 0f && Mathf.Abs(velocity.x) < maxSwingSpeed)
             {
@@ -271,11 +270,15 @@ public class PlayerMovement : MonoBehaviour
         playerJuice.PlaySwingEffects();
     }
 
-    private void StartFalling()
+    private void StartFalling(float speed)
     {
         state = PlayerMovementState.Falling;
 
-        // Effektek
+        jumpSpeed = speed;
+
+        velocity.x = directionX * jumpSpeed;
+        playerBody.velocity = velocity;
+
         playerJuice.PlayFallEffects();
     }
 
@@ -307,6 +310,7 @@ public class PlayerMovement : MonoBehaviour
         if (frozen)
         {
             state = PlayerMovementState.Frozen;
+            playerBody.velocity = Vector2.zero;
         }
         else
         {

@@ -18,7 +18,6 @@ public class PlayerStatus : MonoBehaviour
     [SerializeField] private Color healthyColor;
     [SerializeField] private Color hurtColor;
     [SerializeField] private Light2D globalLight;
-    [SerializeField] private Text blessingCounter;
     private Rigidbody2D playerBody;
     private PlayerMovement playerMovement;
     private Light2D playerLight;
@@ -56,10 +55,12 @@ public class PlayerStatus : MonoBehaviour
             CheckpointReached(checkpoint.name);
             transform.position = checkpoint.transform.position;
         }
+        else
+        {
+            ResetHealth();
+        }
 
         respawnListeners.ForEach(listener => listener.OnPlayerRespawn());
-
-        ShowBlessings();
     }
 
     public GameObject FindCheckpoint(string checkpointName)
@@ -81,8 +82,6 @@ public class PlayerStatus : MonoBehaviour
         ResetHealth();
 
         SavegameManager.Instance.Data.checkpointName = checkpointName;
-        SavegameManager.Instance.Data.visitedBlessings = GetVisitedBlessings();
-        SavegameManager.Instance.Save();
 
         var checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
         foreach (var checkpoint in checkpoints)
@@ -114,6 +113,7 @@ public class PlayerStatus : MonoBehaviour
                 if (checkpointCollider != null)
                 {
                     CheckpointReached(checkpointCollider.gameObject.name);
+                    Save();
                 }
             }
         }
@@ -208,8 +208,6 @@ public class PlayerStatus : MonoBehaviour
 
     private void Death()
     {
-        playerMovement.SetFrozen(true);
-
         //playerAnimator.SetTrigger("Dead");
 
         Time.timeScale = 0f;
@@ -227,7 +225,7 @@ public class PlayerStatus : MonoBehaviour
     private void Respawn()
     {
         Time.timeScale = 1f;
-
+        playerMovement.SetFrozen(true);
         rope.ReleaseGrapplePoint();
 
         var checkpoint = FindCheckpoint(SavegameManager.Instance.Data.checkpointName);
@@ -247,14 +245,18 @@ public class PlayerStatus : MonoBehaviour
 
         respawnListeners.ForEach(listener => listener.OnPlayerRespawn());
         globalLight.color = defaultColor;
-
-        ShowBlessings();
     }
 
     private void ResetHealth()
     {
         health = 10;
         DOTween.To(() => playerLight.pointLightOuterRadius, x => playerLight.pointLightOuterRadius = x, health / lightDecrease, animationInterval);
+    }
+
+    private void Save()
+    {
+        SavegameManager.Instance.Data.visitedBlessings = GetVisitedBlessings();
+        SavegameManager.Instance.Save();
     }
 
     private string[] GetVisitedBlessings()
@@ -276,10 +278,5 @@ public class PlayerStatus : MonoBehaviour
         var worldHeight = Camera.main.orthographicSize;
         var worldWidth = worldHeight * aspect;
         return Mathf.Sqrt(Mathf.Pow(worldHeight, 2) + Mathf.Pow(worldWidth, 2));
-    }
-
-    public void ShowBlessings()
-    {
-        blessingCounter.text = $"Áldások: {GetVisitedBlessings().Length}";
     }
 }
