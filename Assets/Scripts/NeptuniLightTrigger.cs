@@ -21,7 +21,12 @@ public class NeptuniLightTrigger : MonoBehaviour, IPlayerRespawnListener
     private void Start()
     {
         defaultColor = globalLight.color;
-        playerStatus.AddRespawnListener(this);
+        AddListener();
+    }
+
+    private void OnValidate()
+    {
+        AddListener();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -38,12 +43,17 @@ public class NeptuniLightTrigger : MonoBehaviour, IPlayerRespawnListener
         }
     }
 
-    public void OnPlayerRespawn()
+    void IPlayerRespawnListener.OnPlayerRespawn()
     {
         StopTweens();
         globalLight.color = defaultColor;
         minimapImage.enabled = true;
         minimapBorder.enabled = true;
+    }
+
+    private void AddListener()
+    {
+        playerStatus.AddRespawnListener(this);
     }
 
     private void StopTweens()
