@@ -3,29 +3,19 @@ using UnityEngine;
 
 public class RandomDialogueTrigger : MonoBehaviour
 {
-    [SerializeField] private bool triggerOnCollision = true;
-
-    private bool triggered;
+    public bool triggered;
 
     private void Start()
     {
         triggered = SavegameManager.Instance.Data.visitedDialogueTriggers.Contains(name);
     }
 
-    private void OnTriggerEnter2D(Collider2D collider2D)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (triggerOnCollision && collider2D.name == "Player")
-        {
-            TriggerDialogue();
-        }
-    }
-
-    public void TriggerDialogue()
-    {
-        if (triggered == false)
+        if (collider.name == "Player" && triggered == false)
         {
             triggered = true;
-            FindObjectOfType<DialogueManager>().StartRandomDialogue(name);
+            DialogueManager.Instance.StartRandomDialogue(name);
         }
     }
 }

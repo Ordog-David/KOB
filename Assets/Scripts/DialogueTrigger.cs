@@ -2,25 +2,16 @@ using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    [SerializeField] private bool triggerOnCollision = true;
     [SerializeField] private Dialogue[] dialogues;
 
     private bool triggered = false;
 
-    private void OnTriggerEnter2D(Collider2D _)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (triggerOnCollision)
-        {
-            TriggerDialogue();
-        }
-    }
-
-    public void TriggerDialogue()
-    {
-        if (triggered == false)
+        if (collider.name == "Player" && triggered == false)
         {
             triggered = true;
-            FindObjectOfType<DialogueManager>().StartDialogues(dialogues);
+            DialogueManager.Instance.StartDialogues(dialogues);
         }
     }
 }

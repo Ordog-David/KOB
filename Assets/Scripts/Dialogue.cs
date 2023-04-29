@@ -4,10 +4,10 @@ using UnityEngine;
 [Serializable]
 public class Dialogue
 {
-	public Sprite characterSprite;
+    public Sprite characterSprite;
 
-	public string characterName;
+    public string characterName;
 
-	[TextArea(3, 10)]
-	public string[] sentences;
+    [TextArea(3, 10)]
+    public string[] sentences;
 }

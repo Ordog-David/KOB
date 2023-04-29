@@ -5,23 +5,22 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : MonoBehaviourSingleton<DialogueManager>
 {
     [Header("Components")]
     [SerializeField] private Image characterImage;
     [SerializeField] private Text characterName;
     [SerializeField] private Text sentence;
     [SerializeField] private Animator animator;
-    [SerializeField] private Dialogue[] randomDialogues;
     [SerializeField] private PlayerMovement player;
+    [SerializeField] private Dialogue[] randomDialogues;
 
-    private Queue<Dialogue> dialogues;
-    private Queue<string> sentences;
+    private readonly Queue<Dialogue> dialogues = new();
+    private readonly Queue<string> sentences = new();
 
-    private void Start()
+    protected override void Initialize()
     {
-        dialogues = new Queue<Dialogue>();
-        sentences = new Queue<string>();
+        /* Nothing to do here */
     }
 
     public void StartRandomDialogue(string dialogueTrigger)
