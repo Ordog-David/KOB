@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class RedHiveActivator : MonoBehaviour
@@ -34,9 +33,9 @@ public class RedHiveActivator : MonoBehaviour
 
     public void OnShootAnimationEnd()
     {
-        var projectilePosition = transform.position + projectileOffset;
+        var projectilePosition = transform.position + transform.rotation * projectileOffset;
         var projectile = Instantiate(projectileTemplate, projectilePosition, transform.rotation);
-        var straightProjectile = projectile.GetComponent<RedHiveProjectile>();
-        straightProjectile.speed = projectileSpeed;
+        var hiveProjectile = projectile.GetComponent<RedHiveProjectile>();
+        hiveProjectile.speed = projectileSpeed;
     }
 }
