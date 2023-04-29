@@ -1,51 +1,48 @@
 using DG.Tweening;
-using System;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Heart : MonoBehaviour
 {
-    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private PlayerMovement player;
     [SerializeField] private GameObject menu;
-    [SerializeField] private Light2D globalLight;
-    [SerializeField] private GameObject curtain;
-    [SerializeField] private UIActions uiActions;
-    [SerializeField] private Color NeptuniColor;
-    [SerializeField] private Color DusiiColor;
-    [SerializeField] private Color IncubiColor;
-    [SerializeField] private Color SpiritualiaColor;
+    [SerializeField] private Image curtain;
+    [SerializeField] private UIActions hud;
+    [SerializeField] private Color neptuniColor;
+    [SerializeField] private Color dusiiColor;
+    [SerializeField] private Color incubiColor;
+    [SerializeField] private Color spiritualiaColor;
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.name == "Player")
         {
             menu.SetActive(true);
-            playerMovement.SetFrozen(true);
-            uiActions.FreezeTime();
-            SavegameManager.Instance.Reset();
+            player.SetFrozen(true);
+            hud.FreezeTime();
+            SavegameManager.Instance.Clear();
         }
     }
 
     public void OnNeptuniEnding()
     {
-        OnEnding(NeptuniColor);
+        OnEnding(neptuniColor);
     }
 
     public void OnDusiiEnding()
     {
-        OnEnding(DusiiColor);
+        OnEnding(dusiiColor);
     }
 
     public void OnIncubiEnding()
     {
-        OnEnding(IncubiColor);
+        OnEnding(incubiColor);
     }
 
     public void OnSpiritualiaEnding()
     {
-        OnEnding(SpiritualiaColor);
+        OnEnding(spiritualiaColor);
     }
 
     private void OnEnding(Color endColor)
@@ -55,9 +52,7 @@ public class Heart : MonoBehaviour
         var startColor = endColor;
         startColor.a = 0f;
 
-        var image = curtain.GetComponent<Image>();
-
-        DOTween.To(() => startColor, x => image.color = x, endColor, 15f)
+        DOTween.To(() => startColor, x => curtain.color = x, endColor, 15f)
             .OnComplete(() => SceneManager.LoadScene("Main Menu"));
     }
 }
