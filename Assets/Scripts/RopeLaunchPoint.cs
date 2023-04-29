@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,9 +7,9 @@ public class RopeLaunchPoint : MonoBehaviour
     [SerializeField] private Transform ropeLaunchPoint;
     [SerializeField] private Rope rope;
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private PlayerMovement playerMovement;
     private PlayerJuice playerJuice;
     private DistanceJoint2D distanceJoint;
-    [SerializeField] private PlayerMovement playerMovement;
 
     [Header("Settings")]
     [SerializeField] private string grappableTag = "Grappable";
