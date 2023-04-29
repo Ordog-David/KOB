@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RandomDialogueTrigger : MonoBehaviour
 {
-    public bool triggered;
+    private bool triggered;
 
     private void Start()
     {
