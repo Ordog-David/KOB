@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Teleporter : MonoBehaviour
 {
-    [SerializeField] private Vector3 teleportcoordinates;
+    [SerializeField] private Vector3 teleportToPosition;
     [SerializeField] private Light2D globalLight;
     [SerializeField] private RawImage minimapImage;
     [SerializeField] private Image minimapBorder;
@@ -12,7 +12,7 @@ public class Teleporter : MonoBehaviour
     private Color defaultColor;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         defaultColor = globalLight.color;
     }
@@ -21,7 +21,7 @@ public class Teleporter : MonoBehaviour
     {
         if (collision.name == "Player")
         {
-            collision.transform.position = teleportcoordinates;
+            collision.transform.position = teleportToPosition;
             globalLight.color = defaultColor;
             minimapImage.enabled = true;
             minimapBorder.enabled = true;
