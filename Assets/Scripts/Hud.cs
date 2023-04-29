@@ -1,18 +1,16 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UIActions : MonoBehaviour
+public class Hud : MonoBehaviour
 {
-    [SerializeField] private GameObject menu;
-    [SerializeField] private GameObject menuBackground;
-    [SerializeField] private GameObject timer;
-    [SerializeField] private GameObject spiritsBlessingIndicator;
-    private bool hudHidden;
+    [SerializeField] private GameObject hudCanvas;
+    [SerializeField] private GameObject hudBackgroundCanvas;
+    [SerializeField] private Text timerText;
+
+    private bool hidden;
     private bool timeFrozen;
-    private Text timerText;
 
     public void OnQuit(InputAction.CallbackContext context)
     {
@@ -23,21 +21,21 @@ public class UIActions : MonoBehaviour
         }
     }
 
-    public void OnHudHide(InputAction.CallbackContext context)
+    public void OnHudToggle(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            if (hudHidden == false)
+            if (hidden == false)
             {
-                menu.SetActive(false);
-                menuBackground.SetActive(false);
-                hudHidden = true;
+                hudCanvas.SetActive(false);
+                hudBackgroundCanvas.SetActive(false);
+                hidden = true;
             }
             else
             {
-                menu.SetActive(true);
-                menuBackground.SetActive(true);
-                hudHidden = false;
+                hudCanvas.SetActive(true);
+                hudBackgroundCanvas.SetActive(true);
+                hidden = false;
             }
         }
     }
@@ -45,11 +43,6 @@ public class UIActions : MonoBehaviour
     public void FreezeTime()
     {
         timeFrozen = true;
-    }
-
-    private void Start()
-    {
-        timerText = timer.GetComponent<Text>();
     }
 
     private void Update()

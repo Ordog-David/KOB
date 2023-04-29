@@ -8,7 +8,7 @@ public class Heart : MonoBehaviour
     [SerializeField] private PlayerMovement player;
     [SerializeField] private GameObject menu;
     [SerializeField] private Image curtain;
-    [SerializeField] private UIActions hud;
+    [SerializeField] private Hud hud;
     [SerializeField] private Color neptuniColor;
     [SerializeField] private Color dusiiColor;
     [SerializeField] private Color incubiColor;
