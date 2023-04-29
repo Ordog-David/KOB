@@ -1,36 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BlessingDoor : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private int numberOfBlessings;
+
+    private void Start()
     {
-        if (IsOpen())
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            gameObject.SetActive(true);
-        }
+        numberOfBlessings = FindObjectsOfType<Blessing>(true).Length;
+
+        UpdateStatus();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (IsOpen())
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            gameObject.SetActive(true);
-        }
+        UpdateStatus();
     }
-    private bool IsOpen()
+
+    private void UpdateStatus()
     {
-        return SavegameManager.Instance.Data.visitedBlessings.Length == FindObjectsOfType<Blessing>(true).Length;
+        gameObject.SetActive(AreAllBlessingsVisited() == false);
+    }
+
+    private bool AreAllBlessingsVisited()
+    {
+        return SavegameManager.Instance.Data.visitedBlessings.Length == numberOfBlessings;
     }
 }

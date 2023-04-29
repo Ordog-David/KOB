@@ -5,13 +5,13 @@ public class BlessingIndicator : MonoBehaviour
 {
     [SerializeField] private Color collectedColor;
     [SerializeField] private float blinkDuration = 1f;
-    private Color defaultColor;
+
     private Image image;
+    private Color defaultColor;
     public bool saved;
     public bool collected;
-    private float timer;
 
-    private void Awake()
+    private void Start()
     {
         image = GetComponent<Image>();
         defaultColor = image.color;
@@ -19,20 +19,7 @@ public class BlessingIndicator : MonoBehaviour
 
     private void Update()
     {
-        timer += Time.deltaTime;
-        if (collected == true && saved == false && timer > blinkDuration)
-        {
-            image.enabled = !image.enabled;
-            timer = 0f;
-        }
-    }
-
-    public void SetSaved(bool newSaved)
-    {
-        Debug.Log(name + ".saved=" + newSaved);
-        saved = newSaved;
-        collected = saved;
-
+        image.enabled = IsImageEnabled();
         if (collected)
         {
             image.color = collectedColor;
@@ -41,21 +28,32 @@ public class BlessingIndicator : MonoBehaviour
         {
             image.color = defaultColor;
         }
-        image.enabled = true;
+    }
+
+    /* Might be called during Start() from another object */
+    public void SetSavedAndCollected(bool newSaved)
+    {
+        saved = newSaved;
+        collected = newSaved;
+    }
+
+    public void SetSaved(bool newSaved)
+    {
+        saved = newSaved;
     }
 
     public void SetCollected()
     {
         collected = true;
-        image.color = collectedColor;
-        timer = 0f;
     }
 
-    public void OnSavegameSaved()
+    private bool IsImageEnabled()
     {
         if (collected == true && saved == false)
         {
-            SetSaved(true);
+            return (Time.time % (2 * blinkDuration)) >= blinkDuration;
         }
+
+        return true;
     }
 }

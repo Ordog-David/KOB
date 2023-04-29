@@ -1,4 +1,4 @@
 ﻿public interface ISavegameSavedListener
 {
-    public void OnSavegameSaved();
+    void OnSavegameSaved();
 }
