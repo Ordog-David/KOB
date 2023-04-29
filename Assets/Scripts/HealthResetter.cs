@@ -7,7 +7,12 @@ public class HealthResetter : MonoBehaviour, IPlayerRespawnListener
     private void Start()
     {
         gameObject.SetActive(true);
-        player.AddRespawnListener(this);
+        AddListener();
+    }
+
+    private void OnValidate()
+    {
+        AddListener();
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -18,8 +23,20 @@ public class HealthResetter : MonoBehaviour, IPlayerRespawnListener
         }
     }
 
-    public void OnPlayerRespawn()
+    void IPlayerRespawnListener.OnPlayerRespawn()
     {
         gameObject.SetActive(true);
+    }
+
+    private void AddListener()
+    {
+        if (player != null)
+        {
+            player.AddRespawnListener(this);
+        }
+        else
+        {
+            Debug.LogWarning("Cannot reactivate health resetter");
+        }
     }
 }
