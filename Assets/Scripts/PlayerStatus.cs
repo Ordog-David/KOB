@@ -4,7 +4,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.UI;
 
 // This script handles the character being killed and respawning
 public class PlayerStatus : MonoBehaviour
@@ -14,7 +13,6 @@ public class PlayerStatus : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private AudioSource playerHurtSFX;
-    //[SerializeField] private SpriteRenderer flashRenderer;
     [SerializeField] private Color healthyColor;
     [SerializeField] private Color hurtColor;
     [SerializeField] private Light2D globalLight;
@@ -26,7 +24,6 @@ public class PlayerStatus : MonoBehaviour
 
 
     [Header("Settings")]
-    [SerializeField] private float respawnTime = 1;
     [SerializeField] private int invulnerabilityTime = 5;
     [SerializeField] private float flashDuration;
     [SerializeField] private float lightDecrease;
@@ -63,43 +60,14 @@ public class PlayerStatus : MonoBehaviour
         respawnListeners.ForEach(listener => listener.OnPlayerRespawn());
     }
 
-    public GameObject FindCheckpoint(string checkpointName)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        var checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
-        foreach (var checkpoint in checkpoints)
-        {
-            if (checkpoint.name == checkpointName)
-            {
-                return checkpoint;
-            }
-        }
-        return null;
+        CheckHurt(collider);
     }
 
-    // When the player touches a checkpoint, it passes its position to this script
-    public void CheckpointReached(string checkpointName)
+    private void OnTriggerStay2D(Collider2D collider)
     {
-        ResetHealth();
-
-        SavegameManager.Instance.Data.checkpointName = checkpointName;
-
-        var checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
-        foreach (var checkpoint in checkpoints)
-        {
-            var isActive = checkpoint.name == checkpointName;
-            checkpoint.GetComponent<Animator>().SetBool("IsActive", isActive);
-            var checkpointLight = checkpoint.GetComponentInChildren<Light2D>();
-            if (isActive) 
-            {
-                DOTween.To(() => checkpointLight.pointLightOuterRadius, x => checkpointLight.pointLightOuterRadius = x, 5f, 3f);
-            }
-            else
-            {
-                DOTween.To(() => checkpointLight.pointLightOuterRadius, x => checkpointLight.pointLightOuterRadius = x, 0.1f, 0.1f);
-            }
-        }
-
-        Debug.Log("Checkpoint saved");
+        CheckHurt(collider);
     }
 
     public void OnInteract(InputAction.CallbackContext context)
@@ -127,19 +95,63 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
-        CheckHurt(collider);
-    }
-
-    private void OnTriggerStay2D(Collider2D collider)
-    {
-        CheckHurt(collider);
-    }
-
     public void AddRespawnListener(IPlayerRespawnListener listener)
     {
         respawnListeners.Add(listener);
+    }
+
+    private float GetWorldRadius()
+    {
+        var aspect = (float)Screen.width / Screen.height;
+        var worldHeight = Camera.main.orthographicSize;
+        var worldWidth = worldHeight * aspect;
+        return Mathf.Sqrt(Mathf.Pow(worldHeight, 2) + Mathf.Pow(worldWidth, 2));
+    }
+
+    private GameObject FindCheckpoint(string checkpointName)
+    {
+        var checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+        foreach (var checkpoint in checkpoints)
+        {
+            if (checkpoint.name == checkpointName)
+            {
+                return checkpoint;
+            }
+        }
+        return null;
+    }
+
+    // When the player touches a checkpoint, it passes its position to this script
+    private void CheckpointReached(string checkpointName)
+    {
+        ResetHealth();
+
+        SavegameManager.Instance.Data.checkpointName = checkpointName;
+
+        var checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+        foreach (var checkpoint in checkpoints)
+        {
+            var isActive = checkpoint.name == checkpointName;
+            checkpoint.GetComponent<Animator>().SetBool("IsActive", isActive);
+
+            var checkpointLight = checkpoint.GetComponentInChildren<Light2D>();
+            if (isActive)
+            {
+                DOTween.To(() => checkpointLight.pointLightOuterRadius, x => checkpointLight.pointLightOuterRadius = x, 5f, 3f);
+            }
+            else
+            {
+                DOTween.To(() => checkpointLight.pointLightOuterRadius, x => checkpointLight.pointLightOuterRadius = x, 0.1f, 0.1f);
+            }
+        }
+
+        Debug.Log("Checkpoint saved");
+    }
+
+    private void ResetHealth()
+    {
+        health = 10;
+        DOTween.To(() => playerLight.pointLightOuterRadius, x => playerLight.pointLightOuterRadius = x, health / lightDecrease, animationInterval);
     }
 
     private void CheckHurt(Collider2D collider)
@@ -191,16 +203,6 @@ public class PlayerStatus : MonoBehaviour
         ).OnComplete(Unhurt);
     }
 
-    private void TurnOfLight()
-    {
-        playerLight.enabled = false;
-    }
-
-    private void TurnOnLight()
-    {
-        playerLight.enabled = true;
-    }
-
     private void Unhurt()
     {
         hurting = false;
@@ -247,10 +249,14 @@ public class PlayerStatus : MonoBehaviour
         globalLight.color = defaultColor;
     }
 
-    private void ResetHealth()
+    private void TurnOfLight()
     {
-        health = 10;
-        DOTween.To(() => playerLight.pointLightOuterRadius, x => playerLight.pointLightOuterRadius = x, health / lightDecrease, animationInterval);
+        playerLight.enabled = false;
+    }
+
+    private void TurnOnLight()
+    {
+        playerLight.enabled = true;
     }
 
     private void Save()
@@ -270,13 +276,5 @@ public class PlayerStatus : MonoBehaviour
             }
         }
         return visitedBlessings.ToArray();
-    }
-
-    private float GetWorldRadius()
-    {
-        var aspect = (float)Screen.width / Screen.height;
-        var worldHeight = Camera.main.orthographicSize;
-        var worldWidth = worldHeight * aspect;
-        return Mathf.Sqrt(Mathf.Pow(worldHeight, 2) + Mathf.Pow(worldWidth, 2));
     }
 }

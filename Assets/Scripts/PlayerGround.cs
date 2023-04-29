@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 // Erre szükség van a mozgáshoz; Ellenörzi a karakter a földön van-e?

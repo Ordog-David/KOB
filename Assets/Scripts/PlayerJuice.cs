@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 // This script handles purely aesthetic things like particles
@@ -36,49 +35,51 @@ public class PlayerJuice : MonoBehaviour
         }
     }
 
-    internal void PlayFallEffects()
-    {
-        playerAnimator.SetTrigger("Fall");
-    }
-
     public void PlayLandEffects()
     {
         // Play an animation, some particles, and a sound effect when the player lands
         playerAnimator.ResetTrigger("Fall");
         playerAnimator.ResetTrigger("Jump");
         playerAnimator.SetTrigger("Land");
-        //landParticles.Play();
 
-        //if (!landSFX.isPlaying && landSFX.enabled)
+        //landParticles.Play();
+        //if (!landSFX.isPlaying)
         //{
         //    landSFX.Play();
         //}
-
         //moveParticles.Play();
     }
 
-    internal void PlaySwingEffects()
+    public void PlayJumpEffects()
     {
+        PlayAirEffects();
+
+        // Play these effects when the player jumps. Called from the jump script
+        playerAnimator.ResetTrigger("Land");
+        playerAnimator.SetTrigger("Jump");
+
+        //if (!jumpSFX.playing)
+        //{
+        //    jumpSFX.Play();
+        //}
+        //jumpParticles.Play();
+    }
+
+    public void PlaySwingEffects()
+    {
+        PlayAirEffects();
         playerAnimator.SetTrigger("Swing");
+    }
+
+    public void PlayFallEffects()
+    {
+        PlayAirEffects();
+        playerAnimator.SetTrigger("Fall");
     }
 
     private void PlayAirEffects()
     {
         // Player has left the ground, so stop playing the running particles
         //moveParticles.Stop();
-    }
-
-    public void PlayJumpEffects()
-    {
-        // Play these effects when the player jumps. Called from the jump script
-        playerAnimator.ResetTrigger("Land");
-        playerAnimator.SetTrigger("Jump");
-
-        //if (jumpSFX.enabled)
-        //{
-        //    jumpSFX.Play();
-        //}
-
-        //jumpParticles.Play();
     }
 }

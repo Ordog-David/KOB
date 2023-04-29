@@ -84,8 +84,7 @@ public class PlayerMovement : MonoBehaviour
             directionX = 0;
         }
 
-        // Forduláshoz
-        // És irányszámításhoz
+        // Forduláshoz és irányszámításhoz
         if (directionX != 0)
         {
             var scale = transform.localScale.y;
@@ -279,6 +278,7 @@ public class PlayerMovement : MonoBehaviour
         velocity.x = directionX * jumpSpeed;
         playerBody.velocity = velocity;
 
+        // Effektek
         playerJuice.PlayFallEffects();
     }
 
@@ -297,12 +297,6 @@ public class PlayerMovement : MonoBehaviour
     private bool InCoyoteTime()
     {
         return coyoteTimeCounter != 0.0f && coyoteTimeCounter < coyoteTime;
-    }
-
-    // Késöbbre trambulinnak
-    public void BounceUp(float bounceAmount)
-    {
-        playerBody.AddForce(Vector2.up * bounceAmount, ForceMode2D.Impulse);
     }
 
     public void SetFrozen(bool frozen)
