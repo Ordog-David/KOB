@@ -3,31 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class SavegameManager : MonoBehaviour
+public class SavegameManager : MonoBehaviourSingleton<SavegameManager>
 {
-    private static SavegameManager instance;
-    public static SavegameManager Instance {
-        get { return instance; }
-    }
-
     public SavegameData Data = new();
-    private List<ISavegameSavedListener> listeners = new();
+    private readonly List<ISavegameSavedListener> listeners = new();
 
-    private void Awake()
+    protected override void Initialize()
     {
-        // If there is an instance, and it's not me, delete myself.
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-            Debug.Log("Savegame manager is destroyed");
-        }
-        else
-        {
-            instance = this;
-            instance.Load();
-            DontDestroyOnLoad(gameObject);
-            Debug.Log("Savegame manager is loaded");
-        }
+        Load();
     }
 
     public void AddSavegameSavedListener(ISavegameSavedListener listener)
@@ -35,11 +18,19 @@ public class SavegameManager : MonoBehaviour
         listeners.Add(listener);
     }
 
-    public void Reset()
+    private void Load()
     {
-        Data = new();
-        Save();
-        Debug.Log("Savegame manager is resetted");
+        var path = GetSavegamePath();
+
+        try
+        {
+            var json = File.ReadAllText(path);
+            Data = JsonUtility.FromJson<SavegameData>(json);
+        }
+        catch (Exception exception)
+        {
+            Debug.LogWarning($"Failed to read from {path} with exception {exception}");
+        }
     }
 
     public void Save()
@@ -58,19 +49,11 @@ public class SavegameManager : MonoBehaviour
         }
     }
 
-    private void Load()
+    public void Clear()
     {
-        var path = GetSavegamePath();
-
-        try
-        {
-            var json = File.ReadAllText(path);
-            Data = JsonUtility.FromJson<SavegameData>(json);
-        }
-        catch (Exception exception)
-        {
-            Debug.LogWarning($"Failed to read from {path} with exception {exception}");
-        }
+        Data = new();
+        Save();
+        Debug.Log($"{name} is cleared");
     }
 
     private string GetSavegamePath()

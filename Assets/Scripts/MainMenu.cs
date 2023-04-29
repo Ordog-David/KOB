@@ -17,7 +17,7 @@ public class MainMenu : MonoBehaviour
     }
     public void NewGame()
     {
-        SavegameManager.Instance.Reset();
+        SavegameManager.Instance.Clear();
         StartGame();
     }
 }
