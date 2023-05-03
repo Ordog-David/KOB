@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 236b4883065af4b4b91c56f18a83d703
+guid: b939938e1f601004ca4a6b796c716baa
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -43,11 +43,11 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
-  spriteMeshType: 1
+  spriteExtrude: 0
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -105,274 +105,232 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Purple Hive_0
+      name: CheckpointSpriteDeactivated
       rect:
         serializedVersion: 2
         x: 0
-        y: 192
-        width: 64
-        height: 64
+        y: 360
+        width: 120
+        height: 120
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d4ea29ed19b15a48b5446e66713c97a
-      internalID: -1951876813
+      spriteID: 94ec69395756a3948a15256a3126e600
+      internalID: -1744551461
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Purple Hive_1
+      name: CheckpointSpriteActivated
       rect:
         serializedVersion: 2
-        x: 64
-        y: 192
-        width: 64
-        height: 64
+        x: 120
+        y: 360
+        width: 120
+        height: 120
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f14bfbe2464d9ca4a9063b1dd345ce9e
-      internalID: -1339177376
+      spriteID: c15a76bfd919e8444996fa8adc92d77a
+      internalID: -1884376232
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Purple Hive_2
+      name: CheckpointSprite_0
       rect:
         serializedVersion: 2
-        x: 128
-        y: 192
-        width: 64
-        height: 64
+        x: 240
+        y: 360
+        width: 120
+        height: 120
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0f960b8600dc0184ca12e61050a27a3a
-      internalID: -2099903959
+      spriteID: 7667c60e39c5ee04b8185c5b315e0a18
+      internalID: 1956489268
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Purple Hive_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 192
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 22819a680d6bbde4da396e21f9a2702a
-      internalID: -1464301412
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Purple Hive_4
+      name: CheckpointSprite_1
       rect:
         serializedVersion: 2
         x: 0
-        y: 128
-        width: 64
-        height: 64
+        y: 240
+        width: 120
+        height: 120
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ff68127452db654aa4b2e939b03f690
-      internalID: 723277511
+      spriteID: dcc2267038a0bea44a5daee65ad104c7
+      internalID: -831220565
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Purple Hive_5
+      name: CheckpointSprite_2
       rect:
         serializedVersion: 2
-        x: 64
-        y: 128
-        width: 64
-        height: 64
+        x: 120
+        y: 240
+        width: 120
+        height: 120
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8deb2eb018361164eae0e024a8bb274c
-      internalID: -1386651003
+      spriteID: e180f1ed390fca1459de9e91d2c20b68
+      internalID: -392634087
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Purple Hive_6
+      name: CheckpointSprite_3
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
-        width: 64
-        height: 64
+        x: 240
+        y: 240
+        width: 120
+        height: 120
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9d9cb736f3b41043bd48e294c761b86
-      internalID: 485908852
+      spriteID: e0115944569d2cb4a98b25a3c4b4dbc0
+      internalID: 433375493
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Purple Hive_7
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 128
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 90cfe7bc267b89b4db5545d230543bf9
-      internalID: -27689827
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Purple Hive_8
+      name: CheckpointSprite_4
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
-        width: 64
-        height: 64
+        y: 120
+        width: 120
+        height: 120
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c65b2d4b76c60484ba048a768320ed57
-      internalID: -1586471204
+      spriteID: 8e00d49028440824db619d834a26d935
+      internalID: 46155095
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Purple Hive_9
+      name: CheckpointSprite_5
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 64
+        x: 120
+        y: 120
+        width: 120
+        height: 120
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 379f178dfaed1f84a847c91da44b1590
-      internalID: 1545018528
+      spriteID: 0c448c2555cc9a04fb61b2c7fa5d4782
+      internalID: -1883921799
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Purple Hive_10
+      name: CheckpointSprite_6
       rect:
         serializedVersion: 2
-        x: 128
-        y: 64
-        width: 64
-        height: 64
+        x: 240
+        y: 120
+        width: 120
+        height: 120
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 893e8ef13b469ce468b77f9802fff27c
-      internalID: 187459413
+      spriteID: a58809ed9c5ee4441b9e9c8777f0cbdf
+      internalID: 101771425
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Purple Hive_11
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7af41c6383ad75b4fb45da7c1e5742f5
-      internalID: 174713369
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Purple Hive_12
+      name: CheckpointSprite_7
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 120
+        height: 120
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7498a1b5135713f4991a9e9d884af5cc
-      internalID: 1739137911
+      spriteID: 5d67e5d8d4f48b24d8cfe4f1c91f1fd2
+      internalID: 243400561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CheckpointSprite_8
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00a1a50b942502d4fbf1267ae1654997
+      internalID: 1494170140
       vertices: []
       indices: 
       edges: []
@@ -388,19 +346,17 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Purple Hive_11: 174713369
-      Purple Hive_4: 723277511
-      Purple Hive_7: -27689827
-      Purple Hive_10: 187459413
-      Purple Hive_1: -1339177376
-      Purple Hive_3: -1464301412
-      Purple Hive_0: -1951876813
-      Purple Hive_5: -1386651003
-      Purple Hive_9: 1545018528
-      Purple Hive_12: 1739137911
-      Purple Hive_8: -1586471204
-      Purple Hive_2: -2099903959
-      Purple Hive_6: 485908852
+      CheckpointSpriteActivated: -1884376232
+      CheckpointSprite_6: 101771425
+      CheckpointSprite_8: 1494170140
+      CheckpointSprite_4: 46155095
+      CheckpointSprite_0: 1956489268
+      CheckpointSprite_1: -831220565
+      CheckpointSpriteDeactivated: -1744551461
+      CheckpointSprite_2: -392634087
+      CheckpointSprite_7: 243400561
+      CheckpointSprite_3: 433375493
+      CheckpointSprite_5: -1883921799
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

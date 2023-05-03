@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f4ec0775a12a47044998dda23af2d9ef
+guid: 615f5df5148b733448a87f9493d4d78f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -48,11 +48,11 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
-  spriteBorder: {x: 16, y: 16, z: 16, w: 16}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: 0
+  spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -105,232 +105,192 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GroundBorderSprite11
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape:
-      - - {x: -8, y: -8}
-        - {x: -8, y: 8}
-        - {x: 8, y: 8}
-        - {x: 8, y: -8}
-      tessellationDetail: 0
-      bones: []
-      spriteID: b700df427ee526547918b8dd8d0d71ee
-      internalID: -1537828997
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: GroundBorderSprite12
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape:
-      - - {x: -8, y: -8}
-        - {x: -8, y: 8}
-        - {x: 8, y: 8}
-        - {x: 8, y: -8}
-      tessellationDetail: 0
-      bones: []
-      spriteID: cfce6e36387f3a7438fac67d61eff494
-      internalID: -1829008874
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: GroundBorderSprite13
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape:
-      - - {x: -8, y: -8}
-        - {x: -8, y: 8}
-        - {x: 8, y: 8}
-        - {x: 8, y: -8}
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0b425d743b2b3b74da0f6c5087b243ae
-      internalID: -2047113030
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: GroundBorderSprite21
+      name: HealthResetterSprite_0
       rect:
         serializedVersion: 2
         x: 0
         y: 16
-        width: 16
+        width: 10
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -8, y: -8}
-        - {x: -8, y: 8}
-        - {x: 8, y: 8}
-        - {x: 8, y: -8}
+      physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 498332f190a3a624b89282958a1fd403
-      internalID: 1442599186
+      spriteID: c79fa9a58b9cac846b62f124c221939f
+      internalID: 220039046
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GroundBorderSprite23
+      name: HealthResetterSprite_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 10
         y: 16
-        width: 16
+        width: 10
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -8, y: -8}
-        - {x: -8, y: 8}
-        - {x: 8, y: 8}
-        - {x: 8, y: -8}
+      physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ce415a51bac4d343adda594bdb8139c
-      internalID: -1881955701
+      spriteID: eb62a850763da3e47b7d718fdd6a1905
+      internalID: -149928337
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GroundBorderSprite31
+      name: HealthResetterSprite_2
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 16
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 877c873c5bcfa5f4684ceb81157919da
+      internalID: -393087662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HealthResetterSprite_3
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 16
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44070e2f354bac441bc0e3bd60ab427d
+      internalID: -941681596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HealthResetterSprite_4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
+        width: 10
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -8, y: -8}
-        - {x: -8, y: 8}
-        - {x: 8, y: 8}
-        - {x: 8, y: -8}
+      physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 01a09523e15b20741a9e36e92794de87
-      internalID: 1436964121
+      spriteID: 3e93ab9d981165541b00a9a4396ee2fa
+      internalID: -1604446264
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GroundBorderSprite32
+      name: HealthResetterSprite_5
       rect:
         serializedVersion: 2
-        x: 16
+        x: 10
         y: 0
-        width: 16
+        width: 10
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -8, y: -8}
-        - {x: -8, y: 8}
-        - {x: 8, y: 8}
-        - {x: 8, y: -8}
+      physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d49ab0d4824bcec44b53121b7c71361f
-      internalID: 757376866
+      spriteID: ccde229c91087af4d94df1843cbec04c
+      internalID: 153199151
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GroundBorderSprite33
+      name: HealthResetterSprite_6
       rect:
         serializedVersion: 2
-        x: 32
+        x: 20
         y: 0
-        width: 16
+        width: 10
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -8, y: -8}
-        - {x: -8, y: 8}
-        - {x: 8, y: 8}
-        - {x: 8, y: -8}
+      physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3b7ff0fbc3100348853f18986c57965
-      internalID: -156981422
+      spriteID: d5e52b80a373b2847bd2d645bd69df1c
+      internalID: 1456951819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HealthResetterSprite_7
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 0
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd210dc008755314f876b6f67afd9c83
+      internalID: 504249675
       vertices: []
       indices: 
       edges: []
       weights: []
     outline: []
-    physicsShape:
-    - - {x: -24, y: 24}
-      - {x: -24, y: -24}
-      - {x: 24, y: -24}
-      - {x: 24, y: 24}
-    - - {x: 12, y: -15}
-      - {x: 12, y: -14}
-      - {x: 12, y: -14}
-      - {x: 12, y: -15}
+    physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      GroundBorderSprite11: -1537828997
-      GroundBorderSprite33: -156981422
-      GroundBorderSprite13: -2047113030
-      GroundBorderSprite31: 1436964121
-      GroundBorderSprite12: -1829008874
-      GroundBorderSprite23: -1881955701
-      GroundBorderSprite21: 1442599186
-      GroundBorderSprite32: 757376866
+      HealthResetterSprite_6: 1456951819
+      HealthResetterSprite_0: 220039046
+      HealthResetterSprite_3: -941681596
+      HealthResetterSprite_5: 153199151
+      HealthResetterSprite_1: -149928337
+      HealthResetterSprite_2: -393087662
+      HealthResetterSprite_4: -1604446264
+      HealthResetterSprite_7: 504249675
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

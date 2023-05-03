@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 6082521109127412299}
   - component: {fileID: 8227801256434217314}
   m_Layer: 6
-  m_Name: HealthResetter
+  m_Name: Health Resetter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

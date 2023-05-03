@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 615f5df5148b733448a87f9493d4d78f
+guid: 9f5b29efb68d1f845aa9c09d81b2a1a9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,8 +43,8 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
-  spriteMeshType: 0
+  spriteExtrude: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
@@ -105,169 +105,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Gyanta(1)_0
+      name: PurpleHiveProjectileSprite_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17321e5a0392fee45a661293ebb52a74
+      internalID: -303120990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurpleHiveProjectileSprite_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82d13a659c605d740b92af113a461a35
+      internalID: 203583994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurpleHiveProjectileSprite_2
       rect:
         serializedVersion: 2
         x: 0
         y: 16
-        width: 10
+        width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c79fa9a58b9cac846b62f124c221939f
-      internalID: 220039046
+      spriteID: f4f8d35d70a789e4b8dc28da38d6dcec
+      internalID: -2030703056
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gyanta(1)_1
+      name: PurpleHiveProjectileSprite_3
       rect:
         serializedVersion: 2
-        x: 10
+        x: 16
         y: 16
-        width: 10
+        width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eb62a850763da3e47b7d718fdd6a1905
-      internalID: -149928337
+      spriteID: 7d51821c1d45e2e45b64dcbb04fac6de
+      internalID: -35395621
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gyanta(1)_2
-      rect:
-        serializedVersion: 2
-        x: 20
-        y: 16
-        width: 10
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 877c873c5bcfa5f4684ceb81157919da
-      internalID: -393087662
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Gyanta(1)_3
-      rect:
-        serializedVersion: 2
-        x: 30
-        y: 16
-        width: 10
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 44070e2f354bac441bc0e3bd60ab427d
-      internalID: -941681596
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Gyanta(1)_4
+      name: PurpleHiveProjectileSprite_4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 10
+        width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e93ab9d981165541b00a9a4396ee2fa
-      internalID: -1604446264
+      spriteID: 5664724affd62934ebb918e3ed374733
+      internalID: 1190622918
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gyanta(1)_5
+      name: PurpleHiveProjectileSprite_5
       rect:
         serializedVersion: 2
-        x: 10
+        x: 16
         y: 0
-        width: 10
+        width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ccde229c91087af4d94df1843cbec04c
-      internalID: 153199151
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Gyanta(1)_6
-      rect:
-        serializedVersion: 2
-        x: 20
-        y: 0
-        width: 10
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d5e52b80a373b2847bd2d645bd69df1c
-      internalID: 1456951819
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Gyanta(1)_7
-      rect:
-        serializedVersion: 2
-        x: 30
-        y: 0
-        width: 10
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bd210dc008755314f876b6f67afd9c83
-      internalID: 504249675
+      spriteID: f2486ce21af0e2541b8033321e59e28d
+      internalID: 222759054
       vertices: []
       indices: 
       edges: []
@@ -283,14 +241,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Gyanta(1)_4: -1604446264
-      Gyanta(1)_7: 504249675
-      Gyanta(1)_0: 220039046
-      Gyanta(1)_5: 153199151
-      Gyanta(1)_6: 1456951819
-      Gyanta(1)_1: -149928337
-      Gyanta(1)_3: -941681596
-      Gyanta(1)_2: -393087662
+      PurpleHiveProjectileSprite_1: 203583994
+      PurpleHiveProjectileSprite_4: 1190622918
+      PurpleHiveProjectileSprite_5: 222759054
+      PurpleHiveProjectileSprite_0: -303120990
+      PurpleHiveProjectileSprite_3: -35395621
+      PurpleHiveProjectileSprite_2: -2030703056
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9f5b29efb68d1f845aa9c09d81b2a1a9
+guid: e434bebc4db89d04b9827ca56a6f2c55
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,11 +43,11 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
+  spriteExtrude: 0
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -105,7 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Purple_Projectile_0
+      name: RedHiveProjectileSprite_0
       rect:
         serializedVersion: 2
         x: 0
@@ -113,20 +113,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 17321e5a0392fee45a661293ebb52a74
-      internalID: -303120990
+      spriteID: 8e4026245e0855a4d80307d6f86b7ced
+      internalID: 660790267
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Purple_Projectile_1
+      name: RedHiveProjectileSprite_1
       rect:
         serializedVersion: 2
         x: 16
@@ -134,20 +134,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 82d13a659c605d740b92af113a461a35
-      internalID: 203583994
+      spriteID: 1513312c6b41c8445a032ae50a6d63ac
+      internalID: 1897660706
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Purple_Projectile_2
+      name: RedHiveProjectileSprite_2
       rect:
         serializedVersion: 2
         x: 0
@@ -155,20 +155,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4f8d35d70a789e4b8dc28da38d6dcec
-      internalID: -2030703056
+      spriteID: 32857a5f72fa2f24ea2513a461e7e165
+      internalID: 1198961120
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Purple_Projectile_3
+      name: RedHiveProjectileSprite_3
       rect:
         serializedVersion: 2
         x: 16
@@ -176,20 +176,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d51821c1d45e2e45b64dcbb04fac6de
-      internalID: -35395621
+      spriteID: e6de2485b6d784a45a8ed4a5cb83fce1
+      internalID: -1994384272
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Purple_Projectile_4
+      name: RedHiveProjectileSprite_4
       rect:
         serializedVersion: 2
         x: 0
@@ -197,20 +197,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5664724affd62934ebb918e3ed374733
-      internalID: 1190622918
+      spriteID: ed437f13c631df6498d4220f84b53ecc
+      internalID: -1807530649
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Purple_Projectile_5
+      name: RedHiveProjectileSprite_5
       rect:
         serializedVersion: 2
         x: 16
@@ -218,14 +218,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2486ce21af0e2541b8033321e59e28d
-      internalID: 222759054
+      spriteID: fa63793f695fd4440bc8d08e1939d8e6
+      internalID: -814701476
       vertices: []
       indices: 
       edges: []
@@ -241,12 +241,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Purple_Projectile_4: 1190622918
-      Purple_Projectile_5: 222759054
-      Purple_Projectile_0: -303120990
-      Purple_Projectile_3: -35395621
-      Purple_Projectile_1: 203583994
-      Purple_Projectile_2: -2030703056
+      RedHiveProjectileSprite_1: 1897660706
+      RedHiveProjectileSprite_0: 660790267
+      RedHiveProjectileSprite_5: -814701476
+      RedHiveProjectileSprite_3: -1994384272
+      RedHiveProjectileSprite_2: 1198961120
+      RedHiveProjectileSprite_4: -1807530649
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
