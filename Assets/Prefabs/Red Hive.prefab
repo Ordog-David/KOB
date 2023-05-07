@@ -209,7 +209,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 525c02e27cc309a4f9f550ea12f97ebc, type: 2}
-  m_CullingMode: 2
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -236,4 +236,3 @@ MonoBehaviour:
   activationSeconds: 5
   projectileSpeed: 5
   projectileOffset: {x: 0, y: -0.45, z: 0}
-  timer: 0
