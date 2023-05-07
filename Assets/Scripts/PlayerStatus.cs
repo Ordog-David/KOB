@@ -89,7 +89,7 @@ public class PlayerStatus : MonoBehaviour
 
     public void OnRespawn(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && playerMovement.GetState() != PlayerMovement.PlayerMovementState.Frozen)
         {
             Respawn();
         }
