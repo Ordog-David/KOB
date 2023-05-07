@@ -34,7 +34,7 @@ public class PlayerStatus : MonoBehaviour
     public bool hurting = false;
     private Vector3 startingPosition;
 
-    private readonly List<IPlayerRespawnListener> respawnListeners = new();
+    private readonly HashSet<IPlayerRespawnListener> respawnListeners = new();
 
     void Start()
     {
@@ -57,7 +57,7 @@ public class PlayerStatus : MonoBehaviour
             ResetHealth();
         }
 
-        respawnListeners.ForEach(listener => listener.OnPlayerRespawn());
+        respawnListeners.ToList().ForEach(listener => listener.OnPlayerRespawn());
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -98,6 +98,11 @@ public class PlayerStatus : MonoBehaviour
     public void AddRespawnListener(IPlayerRespawnListener listener)
     {
         respawnListeners.Add(listener);
+    }
+
+    public void RemoveRespawnListener(IPlayerRespawnListener listener)
+    {
+        respawnListeners.Remove(listener);
     }
 
     private float GetWorldRadius()
@@ -245,7 +250,7 @@ public class PlayerStatus : MonoBehaviour
         ResetHealth();
         hurting = false;
 
-        respawnListeners.ForEach(listener => listener.OnPlayerRespawn());
+        respawnListeners.ToList().ForEach(listener => listener.OnPlayerRespawn());
         globalLight.color = defaultColor;
     }
 

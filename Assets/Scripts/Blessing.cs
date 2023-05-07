@@ -6,15 +6,27 @@ public class Blessing : MonoBehaviour, IPlayerRespawnListener, ISavegameSavedLis
     [SerializeField] private BlessingIndicator indicator;
     [SerializeField] private PlayerStatus player;
 
+    private bool started = false;
+
     private void Start()
     {
         AddListeners();
         UpdateStatus();
+
+        started = true;
     }
 
     private void OnValidate()
     {
-        AddListeners();
+        if (started)
+        {
+            AddListeners();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        RemoveListeners();
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -42,6 +54,12 @@ public class Blessing : MonoBehaviour, IPlayerRespawnListener, ISavegameSavedLis
     {
         player.AddRespawnListener(this);
         SavegameManager.Instance.AddSavegameSavedListener(this);
+    }
+
+    private void RemoveListeners()
+    {
+        player.RemoveRespawnListener(this);
+        SavegameManager.Instance.RemoveSavegameSavedListener(this);
     }
 
     private void UpdateStatus()

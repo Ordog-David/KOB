@@ -1,21 +1,28 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class SavegameManager : MonoBehaviourSingleton<SavegameManager>
 {
     public SavegameData Data = new();
-    private readonly List<ISavegameSavedListener> listeners = new();
+    private readonly HashSet<ISavegameSavedListener> listeners = new();
 
     protected override void Initialize()
     {
+        DontDestroyOnLoad(gameObject);
         Load();
     }
 
     public void AddSavegameSavedListener(ISavegameSavedListener listener)
     {
         listeners.Add(listener);
+    }
+
+    public void RemoveSavegameSavedListener(ISavegameSavedListener listener)
+    {
+        listeners.Remove(listener);
     }
 
     private void Load()
@@ -41,7 +48,7 @@ public class SavegameManager : MonoBehaviourSingleton<SavegameManager>
         {
             var json = JsonUtility.ToJson(Data);
             File.WriteAllText(path, json);
-            listeners.ForEach(listener => listener.OnSavegameSaved());
+            listeners.ToList().ForEach(listener => listener.OnSavegameSaved());
         }
         catch (Exception exception)
         {

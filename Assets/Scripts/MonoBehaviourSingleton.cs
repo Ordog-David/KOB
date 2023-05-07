@@ -17,7 +17,6 @@ public abstract class MonoBehaviourSingleton<T> : MonoBehaviour, ISerializationC
         {
             Instance = (T)this;
             Initialize();
-            DontDestroyOnLoad(gameObject);
             Debug.Log($"{name} is initialized");
         }
     }
