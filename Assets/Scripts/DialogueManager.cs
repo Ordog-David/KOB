@@ -13,6 +13,7 @@ public class DialogueManager : MonoBehaviourSingleton<DialogueManager>
     [SerializeField] private Text sentence;
     [SerializeField] private Animator animator;
     [SerializeField] private PlayerMovement player;
+    [SerializeField] private Hud hud;
     [SerializeField] private Dialogue[] randomDialogues;
 
     private readonly Queue<Dialogue> dialogues = new();
@@ -44,6 +45,11 @@ public class DialogueManager : MonoBehaviourSingleton<DialogueManager>
 
     public void StartDialogues(Dialogue[] dialogues)
     {
+        if (hud.hidden == true)
+        {
+            return;
+        }
+
         this.dialogues.Clear();
         foreach (var dialogue in dialogues)
         {

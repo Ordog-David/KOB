@@ -7,17 +7,23 @@ public class Heart : MonoBehaviour
 {
     [SerializeField] private PlayerMovement player;
     [SerializeField] private GameObject menu;
+    [SerializeField] private GameObject canvas;
     [SerializeField] private Image curtain;
     [SerializeField] private Hud hud;
     [SerializeField] private Color neptuniColor;
     [SerializeField] private Color dusiiColor;
     [SerializeField] private Color incubiColor;
     [SerializeField] private Color spiritualiaColor;
+    [SerializeField] private RawImage minimap;
+    [SerializeField] private Image minimapBorder;
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.name == "Player")
         {
+            canvas.SetActive(true);
+            minimap.enabled = false;
+            minimapBorder.enabled = false;
             menu.SetActive(true);
             player.SetFrozen(true);
             hud.FreezeTime();

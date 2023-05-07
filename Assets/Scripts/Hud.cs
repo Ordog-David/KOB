@@ -9,7 +9,7 @@ public class Hud : MonoBehaviour
     [SerializeField] private GameObject hudBackgroundCanvas;
     [SerializeField] private Text timerText;
 
-    private bool hidden;
+    public bool hidden;
     private bool timeFrozen;
 
     public void OnQuit(InputAction.CallbackContext context)
