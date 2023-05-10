@@ -1,15 +1,26 @@
+using Extensions;
+using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Blessing : MonoBehaviour, IPlayerRespawnListener, ISavegameSavedListener
 {
     [SerializeField] private BlessingIndicator indicator;
     [SerializeField] private PlayerStatus player;
+    [SerializeField] private AudioSource collectedSFX;
+    [SerializeField] private AudioSource lostSFX;
+    private SpriteRenderer spriteRenderer;
+    private Collider2D blessingCollider;
+    private Light2D blessingLight;
 
     private bool started = false;
 
     private void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        blessingCollider = GetComponent<CapsuleCollider2D>();
+        blessingLight = GetComponentInChildren<Light2D>();
         AddListeners();
         UpdateStatus();
 
@@ -33,8 +44,11 @@ public class Blessing : MonoBehaviour, IPlayerRespawnListener, ISavegameSavedLis
     {
         if (collider.name == "Player")
         {
+            spriteRenderer.enabled = false;
+            blessingCollider.enabled = false;
+            blessingLight.enabled = false;
             indicator.SetCollected();
-            gameObject.SetActive(false);
+            this.PlaySoundThen(collectedSFX, () => gameObject.SetActive(false));
         }
     }
 
@@ -65,8 +79,18 @@ public class Blessing : MonoBehaviour, IPlayerRespawnListener, ISavegameSavedLis
     private void UpdateStatus()
     {
         var saved = IsSaved();
+        var respawned = gameObject.activeInHierarchy == false && saved == false;
+
         indicator.SetSavedAndCollected(saved);
         gameObject.SetActive(saved == false);
+
+        if (respawned)
+        {
+            lostSFX.Play();
+            spriteRenderer.enabled = true;
+            blessingCollider.enabled = true;
+            blessingLight.enabled = true;
+        }
     }
 
     private bool IsSaved()

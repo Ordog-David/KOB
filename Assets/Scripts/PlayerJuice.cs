@@ -12,9 +12,13 @@ public class PlayerJuice : MonoBehaviour
     //[SerializeField] private ParticleSystem jumpParticles;
     //[SerializeField] private ParticleSystem landParticles;
 
-    //[Header("Components - Audio")]
-    //[SerializeField] private AudioSource jumpSFX;
-    //[SerializeField] private AudioSource landSFX;
+    [Header("Components - Audio")]
+    [SerializeField] private AudioSource jumpSFX;
+    [SerializeField] private AudioSource landSFX;
+    [SerializeField] private AudioSource hurtSFX;
+    [SerializeField] private AudioSource deathSFX;
+    [SerializeField] private AudioSource saveSFX;
+    [SerializeField] private AudioSource healthResetterSFX;
 
     void Start()
     {
@@ -43,10 +47,8 @@ public class PlayerJuice : MonoBehaviour
         playerAnimator.SetTrigger("Land");
 
         //landParticles.Play();
-        //if (!landSFX.isPlaying)
-        //{
-        //    landSFX.Play();
-        //}
+        landSFX.Play();
+
         //moveParticles.Play();
     }
 
@@ -58,11 +60,8 @@ public class PlayerJuice : MonoBehaviour
         playerAnimator.ResetTrigger("Land");
         playerAnimator.SetTrigger("Jump");
 
-        //if (!jumpSFX.playing)
-        //{
-        //    jumpSFX.Play();
-        //}
         //jumpParticles.Play();
+        jumpSFX.Play();
     }
 
     public void PlaySwingEffects()
@@ -81,5 +80,25 @@ public class PlayerJuice : MonoBehaviour
     {
         // Player has left the ground, so stop playing the running particles
         //moveParticles.Stop();
+    }
+
+    public void PlayHurtEffects()
+    {
+        hurtSFX.Play();
+    }
+
+    public void PlayDeathEffects()
+    {
+        deathSFX.Play();
+    }
+
+    public void PlaySaveEffects()
+    {
+        saveSFX.Play();
+    }
+
+    public void PlayHealthResetterEffects()
+    {
+        healthResetterSFX.Play();
     }
 }

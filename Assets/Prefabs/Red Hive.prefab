@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4639508769579058724}
   - component: {fileID: 4639508769579058727}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Red Hive Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,9 +123,9 @@ GameObject:
   - component: {fileID: 4639508771241284431}
   - component: {fileID: 4639508771241284428}
   - component: {fileID: 4639508771241284425}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Red Hive
-  m_TagString: Untagged
+  m_TagString: Red Hive
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -12,7 +12,7 @@ public class PlayerStatus : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] private Animator playerAnimator;
-    [SerializeField] private AudioSource playerHurtSFX;
+    [SerializeField] private PlayerJuice playerJuice;
     [SerializeField] private Color healthyColor;
     [SerializeField] private Color hurtColor;
     [SerializeField] private Light2D globalLight;
@@ -180,20 +180,21 @@ public class PlayerStatus : MonoBehaviour
         }
         else if (collider.gameObject.layer == LayerMask.NameToLayer("Health Reset"))
         {
+            playerJuice.PlayHealthResetterEffects();
             ResetHealth();
         }
     }
 
     private void Hurt(int damage)
     {
-        playerHurtSFX.Play();
-
         health -= Mathf.Min(damage, health);
         if (health == 0)
         {
             Death();
             return;
         }
+
+        playerJuice.PlayHurtEffects();
 
         // Start a timer, during which we modify the health light and the character is invulnerable.
         DOTween.Sequence().AppendCallback(
@@ -216,6 +217,7 @@ public class PlayerStatus : MonoBehaviour
     private void Death()
     {
         //playerAnimator.SetTrigger("Dead");
+        playerJuice.PlayDeathEffects();
 
         Time.timeScale = 0f;
 
@@ -268,6 +270,7 @@ public class PlayerStatus : MonoBehaviour
     {
         SavegameManager.Instance.Data.visitedBlessings = GetVisitedBlessings();
         SavegameManager.Instance.Save();
+        playerJuice.PlaySaveEffects();
     }
 
     private string[] GetVisitedBlessings()

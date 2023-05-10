@@ -1,12 +1,17 @@
+using Extensions;
 using UnityEngine;
 
 public class BlessingDoor : MonoBehaviour
 {
+    [SerializeField] private AudioSource openingSFX;
+
     private int numberOfBlessings;
+    private bool soundPlayed;
 
     private void Start()
     {
         numberOfBlessings = FindObjectsOfType<Blessing>(true).Length;
+        soundPlayed = false;
 
         UpdateStatus();
     }
@@ -18,7 +23,11 @@ public class BlessingDoor : MonoBehaviour
 
     private void UpdateStatus()
     {
-        gameObject.SetActive(AreAllBlessingsVisited() == false);
+        if (gameObject.activeInHierarchy == true && AreAllBlessingsVisited() == true && soundPlayed == false)
+        {
+            soundPlayed = true;
+            this.PlaySoundThen(openingSFX, () => gameObject.SetActive(false));
+        }
     }
 
     private bool AreAllBlessingsVisited()

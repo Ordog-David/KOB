@@ -1,3 +1,4 @@
+using Extensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,7 @@ public class Hud : MonoBehaviour
     [SerializeField] private GameObject hudCanvas;
     [SerializeField] private GameObject hudBackgroundCanvas;
     [SerializeField] private Text timerText;
+    [SerializeField] private AudioSource buttonPressSFX;
 
     public bool hidden;
     private bool timeFrozen;
@@ -17,7 +19,7 @@ public class Hud : MonoBehaviour
         if (context.performed)
         {
             SavegameManager.Instance.Save();
-            SceneManager.LoadScene("Main Menu");
+            this.PlaySoundThen(buttonPressSFX, () => SceneManager.LoadScene("Main Menu"));
         }
     }
 

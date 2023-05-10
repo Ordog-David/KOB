@@ -12,6 +12,7 @@ public class PurpleHiveProjectile : MonoBehaviour
     private Rigidbody2D rigidBody;
     private SpriteRenderer projectileRenderer;
     private Light2D projectileLight;
+    [SerializeField] private AudioSource existSFX;
 
     // Use this for initialization
     void Start()
@@ -19,6 +20,7 @@ public class PurpleHiveProjectile : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         projectileRenderer = GetComponent<SpriteRenderer>();
         projectileLight = GetComponentInChildren<Light2D>();
+        existSFX.Play();
     }
 
     private void Update()
@@ -29,6 +31,7 @@ public class PurpleHiveProjectile : MonoBehaviour
         if (projectileLight.color.a < 0.1)
         {
             purpleHive.ProjectileMiss();
+            existSFX.Stop();
             Destroy(gameObject);
         }
     }
@@ -51,8 +54,8 @@ public class PurpleHiveProjectile : MonoBehaviour
         }
 
         // Put a particle effect here
+        existSFX.Stop();
         Destroy(gameObject);
-
     }
 
     private Color FadeOut(Color color)

@@ -8,6 +8,9 @@ public class RopeLaunchPoint : MonoBehaviour
     [SerializeField] private Rope rope;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private AudioSource launchRopeSFX;
+    [SerializeField] private AudioSource releaseRopeSFX;
+    [SerializeField] private AudioSource ropeMissSFX;
     private PlayerJuice playerJuice;
     private DistanceJoint2D distanceJoint;
 
@@ -49,9 +52,14 @@ public class RopeLaunchPoint : MonoBehaviour
         var hit = Physics2D.Raycast(ropeLaunchPoint.position, distanceVector.normalized, maximumDistance);
         if (hit.transform != null && hit.transform.gameObject.CompareTag(grappableTag))
         {
+            launchRopeSFX.Play();
             grapplePoint = hit.point;
             grappleDistanceVector = grapplePoint - (Vector2)ropeLaunchPoint.position;
             rope.enabled = true;
+        }
+        else
+        {
+            ropeMissSFX.Play();
         }
     }
 
@@ -62,6 +70,7 @@ public class RopeLaunchPoint : MonoBehaviour
             rope.enabled = false;
             if (distanceJoint.enabled)
             {
+                releaseRopeSFX.Play();
                 distanceJoint.enabled = false;
                 playerJuice.PlayFallEffects();
             }
